@@ -1,4 +1,3 @@
-Yes — **one single Markdown block**, so you can copy and paste the entire thing directly into `README.md`:
 
 ````markdown
 # SupportAI
