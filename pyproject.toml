@@ -1,0 +1,17 @@
+[project]
+name = "ai-powered-customer-support-ticket-resolution-system"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Jeye-suriya", email = "jeyasurya347@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+ai-powered-customer-support-ticket-resolution-system = "ai_powered_customer_support_ticket_resolution_system:main"
+
+[build-system]
+requires = ["uv_build>=0.12.15,<0.13.0"]
+build-backend = "uv_build"
