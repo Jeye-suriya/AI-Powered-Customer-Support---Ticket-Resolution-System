@@ -1,5 +1,5 @@
 
-````markdown
+
 # SupportAI
 
 ## AI-Powered Customer Support Ticket Resolution System
