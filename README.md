@@ -1,3 +1,4 @@
+````markdown
 # SupportAI
 
 ### AI-Powered Customer Support Ticket Resolution System
@@ -38,13 +39,13 @@ Escalation Decision
 Resolved / Escalated
       ↓
 Ticket Storage
-```
+````
 
 The system combines **semantic machine learning, vector retrieval, RAG, generative AI, confidence-based decisions, and persistent ticket management**.
 
 ---
 
-## Architecture
+# Architecture
 
 ```text
 ┌──────────────────────┐
@@ -126,48 +127,48 @@ The system combines **semantic machine learning, vector retrieval, RAG, generati
 
 ### Intelligent Ticket Understanding
 
-- Detects out-of-scope requests before intent classification.
-- Supports **77 customer-support intents**.
-- Uses semantic embeddings to understand variations in customer language.
+* Detects out-of-scope requests before intent classification.
+* Supports **77 customer-support intents**.
+* Uses semantic embeddings to understand variations in customer language.
 
 ### Knowledge-Grounded Retrieval
 
-- **153 structured support articles**.
-- Semantic vector search using ChromaDB.
-- Cosine-similarity based retrieval.
-- Intent-aware reranking using the predicted support intent.
+* **153 structured support articles**.
+* Semantic vector search using ChromaDB.
+* Cosine-similarity based retrieval.
+* Intent-aware reranking using the predicted support intent.
 
 ### RAG Response Generation
 
-- Retrieves relevant support information before response generation.
-- Provides retrieved knowledge as context to Gemini.
-- Generates customer-facing responses grounded in application-specific support information.
+* Retrieves relevant support information before response generation.
+* Provides retrieved knowledge as context to Gemini.
+* Generates customer-facing responses grounded in application-specific support information.
 
 ### Confidence-Aware Escalation
 
 Tickets can be escalated when:
 
-- Intent confidence is below the configured threshold.
-- No sufficiently relevant knowledge article is found.
-- A configured escalation condition applies.
-- The AI generation service encounters an error.
+* Intent confidence is below the configured threshold.
+* No sufficiently relevant knowledge article is found.
+* A configured escalation condition applies.
+* The AI generation service encounters an error.
 
 ### Persistent Ticket Management
 
-- SQLite-based ticket storage.
-- Ticket history.
-- Individual ticket lookup.
-- REST API access.
+* SQLite-based ticket storage.
+* Ticket history.
+* Individual ticket lookup.
+* REST API access.
 
 ### Web Interface
 
 The Streamlit application provides:
 
-- Dashboard
-- New Ticket
-- AI Resolution
-- Ticket History
-- System Status
+* Dashboard
+* New Ticket
+* AI Resolution
+* Ticket History
+* System Status
 
 ---
 
@@ -179,12 +180,12 @@ The first stage determines whether an incoming request belongs to the supported 
 
 ### Model
 
-| Component | Implementation |
-|---|---|
-| Embedding Model | `all-MiniLM-L6-v2` |
-| Embedding Size | 384 |
-| Classifier | Logistic Regression |
-| Class Weight | Balanced |
+| Component       | Implementation      |
+| --------------- | ------------------- |
+| Embedding Model | `all-MiniLM-L6-v2`  |
+| Embedding Size  | 384                 |
+| Classifier      | Logistic Regression |
+| Class Weight    | Balanced            |
 
 **Evaluation Accuracy: 95.78%**
 
@@ -204,25 +205,25 @@ In-domain tickets are classified into one of **77 customer-support intents**.
 
 The taxonomy covers areas including:
 
-- Cards
-- Card Payments
-- Transfers
-- Top-ups
-- Cash Withdrawals
-- Identity Verification
-- Account Management
-- Virtual Cards
-- Currency and Exchange
-- Refunds
-- Security
+* Cards
+* Card Payments
+* Transfers
+* Top-ups
+* Cash Withdrawals
+* Identity Verification
+* Account Management
+* Virtual Cards
+* Currency and Exchange
+* Refunds
+* Security
 
 ### Model
 
-| Component | Implementation |
-|---|---|
-| Embedding Model | `all-MiniLM-L6-v2` |
-| Classifier | Logistic Regression |
-| Intent Classes | 77 |
+| Component       | Implementation      |
+| --------------- | ------------------- |
+| Embedding Model | `all-MiniLM-L6-v2`  |
+| Classifier      | Logistic Regression |
+| Intent Classes  | 77                  |
 
 **Test Accuracy: 92.21%**
 
@@ -319,12 +320,12 @@ This improves the ranking of articles that match the detected support intent whi
 
 ### Retrieval Evaluation
 
-| Metric | Result |
-|---|---:|
-| Retrieval Coverage | **85.42%** |
-| Top-1 Intent Accuracy | **71.59%** |
-| Top-3 Intent Recall | **74.29%** |
-| Mean Reciprocal Rank | **85.27%** |
+| Metric                 |     Result |
+| ---------------------- | ---------: |
+| Retrieval Coverage     | **85.42%** |
+| Top-1 Intent Accuracy  | **71.59%** |
+| Top-3 Intent Recall    | **74.29%** |
+| Mean Reciprocal Rank   | **85.27%** |
 | Average Top Similarity | **59.74%** |
 
 ---
@@ -349,11 +350,11 @@ Customer Response
 
 The generation stage is designed to:
 
-- Use retrieved support information.
-- Produce a clear customer-facing response.
-- Avoid unsupported claims.
-- Follow available resolution information.
-- Consider applicable escalation conditions.
+* Use retrieved support information.
+* Produce a clear customer-facing response.
+* Avoid unsupported claims.
+* Follow available resolution information.
+* Consider applicable escalation conditions.
 
 ---
 
@@ -385,21 +386,21 @@ This provides a controlled path for uncertain or sensitive support cases.
 
 # Technology Stack
 
-| Layer | Technology |
-|---|---|
-| Language | Python 3.12 |
-| Backend | FastAPI |
-| Frontend | Streamlit |
-| Validation | Pydantic |
-| Machine Learning | Scikit-learn |
-| Embeddings | Sentence Transformers |
-| Embedding Model | `all-MiniLM-L6-v2` |
-| Classifier | Logistic Regression |
-| Vector Database | ChromaDB |
-| Generative AI | Google Gemini |
-| Database | SQLite |
-| Package Management | uv |
-| Version Control | Git / GitHub |
+| Layer              | Technology            |
+| ------------------ | --------------------- |
+| Language           | Python 3.12           |
+| Backend            | FastAPI               |
+| Frontend           | Streamlit             |
+| Validation         | Pydantic              |
+| Machine Learning   | Scikit-learn          |
+| Embeddings         | Sentence Transformers |
+| Embedding Model    | `all-MiniLM-L6-v2`    |
+| Classifier         | Logistic Regression   |
+| Vector Database    | ChromaDB              |
+| Generative AI      | Google Gemini         |
+| Database           | SQLite                |
+| Package Management | uv                    |
+| Version Control    | Git / GitHub          |
 
 ---
 
@@ -471,12 +472,12 @@ This provides a controlled path for uncertain or sensitive support cases.
 
 SupportAI exposes a REST API through FastAPI.
 
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/api/health` | API health check |
-| `POST` | `/api/tickets` | Process a support ticket |
-| `GET` | `/api/tickets` | Retrieve ticket history |
-| `GET` | `/api/tickets/{ticket_id}` | Retrieve a specific ticket |
+| Method | Endpoint                   | Description                |
+| ------ | -------------------------- | -------------------------- |
+| `GET`  | `/api/health`              | API health check           |
+| `POST` | `/api/tickets`             | Process a support ticket   |
+| `GET`  | `/api/tickets`             | Retrieve ticket history    |
+| `GET`  | `/api/tickets/{ticket_id}` | Retrieve a specific ticket |
 
 Interactive API documentation:
 
@@ -516,15 +517,15 @@ This allows ticket history to remain available across application restarts.
 
 The current evaluation was performed using the held-out in-domain test set.
 
-| Component | Metric | Result |
-|---|---|---:|
-| OOS Detector | Accuracy | **95.78%** |
-| Intent Classifier | Accuracy | **92.21%** |
-| KB Retrieval | Coverage | **85.42%** |
-| KB Retrieval | Top-1 Intent Accuracy | **71.59%** |
-| KB Retrieval | Top-3 Intent Recall | **74.29%** |
-| KB Retrieval | MRR | **85.27%** |
-| Pipeline Routing | Accuracy | **91.46%** |
+| Component         | Metric                |     Result |
+| ----------------- | --------------------- | ---------: |
+| OOS Detector      | Accuracy              | **95.78%** |
+| Intent Classifier | Accuracy              | **92.21%** |
+| KB Retrieval      | Coverage              | **85.42%** |
+| KB Retrieval      | Top-1 Intent Accuracy | **71.59%** |
+| KB Retrieval      | Top-3 Intent Recall   | **74.29%** |
+| KB Retrieval      | MRR                   | **85.27%** |
+| Pipeline Routing  | Accuracy              | **91.46%** |
 
 These metrics represent different stages of the system and are **not combined into a single overall accuracy score**.
 
@@ -540,15 +541,15 @@ uv run python -m backend.evaluate_pipeline
 
 ## Requirements
 
-- Python 3.12+
-- [uv](https://docs.astral.sh/uv/)
-- Google Gemini API access
+* Python 3.12+
+* [uv](https://docs.astral.sh/uv/)
+* Google Gemini API access
 
-## 1. Clone
+## 1. Clone the Repository
 
 ```powershell
-git clone <your-repository-url>
-cd AI-Powered-Customer-Support-Ticket-Resolution-System
+git clone https://github.com/adil-5o5/Support_AI_resolution_Engine.git
+cd Support_AI_resolution_Engine
 ```
 
 ## 2. Install Dependencies
@@ -577,6 +578,12 @@ Backend:
 
 ```text
 http://127.0.0.1:8000
+```
+
+API documentation:
+
+```text
+http://127.0.0.1:8000/docs
 ```
 
 ## 5. Start the Frontend
@@ -715,36 +722,36 @@ The system provides a human-support path when confidence is low, relevant knowle
 
 # Limitations
 
-- Some closely related support intents remain difficult to distinguish.
-- Retrieval does not always return a sufficiently relevant knowledge article.
-- Response quality depends partly on the configured generative AI service.
-- The system is designed around a fixed 77-intent support taxonomy.
-- The current implementation is a portfolio/demonstration system rather than a production deployment connected to a real customer-support platform.
+* Some closely related support intents remain difficult to distinguish.
+* Retrieval does not always return a sufficiently relevant knowledge article.
+* Response quality depends partly on the configured generative AI service.
+* The system is designed around a fixed 77-intent support taxonomy.
+* The current implementation is a portfolio/demonstration system rather than a production deployment connected to a real customer-support platform.
 
 ---
 
 # Future Improvements
 
-- Advanced retrieval and reranking models
-- Automated regression testing
-- Human-based response-quality evaluation
-- Production monitoring and observability
-- Authentication and role-based access control
-- Cloud deployment
-- Integration with real customer-support platforms
+* Advanced retrieval and reranking models
+* Automated regression testing
+* Human-based response-quality evaluation
+* Production monitoring and observability
+* Authentication and role-based access control
+* Cloud deployment
+* Integration with real customer-support platforms
 
 ---
 
 # Project Highlights
 
-| | |
-|---|---|
-| **77** | Supported customer-support intents |
-| **153** | Knowledge-base articles |
-| **95.78%** | OOS detection accuracy |
-| **92.21%** | Intent classification accuracy |
-| **85.42%** | KB retrieval coverage |
-| **91.46%** | Pipeline routing accuracy |
+|            |                                    |
+| ---------- | ---------------------------------- |
+| **77**     | Supported customer-support intents |
+| **153**    | Knowledge-base articles            |
+| **95.78%** | OOS detection accuracy             |
+| **92.21%** | Intent classification accuracy     |
+| **85.42%** | KB retrieval coverage              |
+| **91.46%** | Pipeline routing accuracy          |
 
 ---
 
@@ -758,5 +765,6 @@ AI / Software Engineering Project
 
 ## License
 
-This project is intended for educational, portfolio, and demonstration purposes.#   A I - P o w e r e d - C u s t o m e r - S u p p o r t - - - T i c k e t - R e s o l u t i o n - S y s t e m  
- 
+This project is intended for educational, portfolio, and demonstration purposes.
+
+```
