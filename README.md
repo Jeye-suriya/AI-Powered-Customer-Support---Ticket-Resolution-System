@@ -7,7 +7,7 @@
 > An end-to-end AI customer-support automation system that understands customer tickets, detects unsupported requests, classifies customer intent, retrieves relevant knowledge, generates grounded responses using RAG, and intelligently routes uncertain or sensitive cases for human support.
 
 
-🔗 **GitHub:** https://github.com/Jeye-suriya/AI-Powered-Customer-Support---Ticket-Resolution-System
+ **GitHub:** https://github.com/Jeye-suriya/AI-Powered-Customer-Support---Ticket-Resolution-System
 
 ---
 
