@@ -7,7 +7,21 @@ authors = [
     { name = "Jeye-suriya", email = "jeyasurya347@gmail.com" }
 ]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "chromadb>=1.5.9",
+    "fastapi>=0.141.1",
+    "google-genai>=2.24.0",
+    "langchain>=1.4.1",
+    "langchain-community>=0.4.2",
+    "numpy>=2.5.3",
+    "pandas>=3.0.5",
+    "python-dotenv>=1.2.3",
+    "requests>=2.34.2",
+    "scikit-learn>=1.9.1",
+    "sentence-transformers>=6.0.1",
+    "streamlit>=1.64.0",
+    "uvicorn>=0.53.0",
+]
 
 [project.scripts]
 ai-powered-customer-support-ticket-resolution-system = "ai_powered_customer_support_ticket_resolution_system:main"

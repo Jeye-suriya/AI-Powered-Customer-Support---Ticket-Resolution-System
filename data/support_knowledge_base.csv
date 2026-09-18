@@ -1,0 +1,1215 @@
+kb_id,category,intent,title,problem,symptoms,resolution_steps,additional_information,escalation_condition,search_text
+KB025,API/Integration,api_authentication,API authentication failure,API requests fail because authentication is invalid or missing.,401/403 responses; invalid token/key.,"Verify API key/token, authorization header, environment variable, endpoint, and required permissions. Reissue credentials if appropriate.",Never expose secret keys in support messages or logs.,Escalate suspected credential compromise.,"Category: API/Integration
+Intent: api_authentication
+Issue: API authentication failure
+Problem: API requests fail because authentication is invalid or missing.
+Symptoms: 401/403 responses; invalid token/key.
+Resolution: Verify API key/token, authorization header, environment variable, endpoint, and required permissions. Reissue credentials if appropriate.
+Additional information: Never expose secret keys in support messages or logs.
+Escalation: Escalate suspected credential compromise."
+KB038,API/Integration,api_documentation_mismatch,API documentation mismatch,Documentation examples do not match actual API responses.,Unexpected response fields/shape.,"Verify API version and endpoint, consult the current schema/changelog, and use the version-specific documentation.",Avoid coding against outdated examples.,Escalate confirmed documentation defects.,"Category: API/Integration
+Intent: api_documentation_mismatch
+Issue: API documentation mismatch
+Problem: Documentation examples do not match actual API responses.
+Symptoms: Unexpected response fields/shape.
+Resolution: Verify API version and endpoint, consult the current schema/changelog, and use the version-specific documentation.
+Additional information: Avoid coding against outdated examples.
+Escalation: Escalate confirmed documentation defects."
+KB030,API/Integration,api_stale_data,API returns stale data,GET requests return older values after an update.,Dashboard changed but API has old value.,Check cache behavior and cache-control/invalidation status. Retry after the documented propagation period.,Caching can create temporary stale reads.,Escalate if stale data persists beyond the documented window.,"Category: API/Integration
+Intent: api_stale_data
+Issue: API returns stale data
+Problem: GET requests return older values after an update.
+Symptoms: Dashboard changed but API has old value.
+Resolution: Check cache behavior and cache-control/invalidation status. Retry after the documented propagation period.
+Additional information: Caching can create temporary stale reads.
+Escalation: Escalate if stale data persists beyond the documented window."
+KB029,API/Integration,api_timeout,API request times out,Large or slow API operations exceed the request timeout.,Timeout; 30-second request failure.,"Use pagination, filtering, smaller requests, or an asynchronous job/export endpoint when available.",Large exports should generally be processed asynchronously.,Escalate if normal-sized requests time out.,"Category: API/Integration
+Intent: api_timeout
+Issue: API request times out
+Problem: Large or slow API operations exceed the request timeout.
+Symptoms: Timeout; 30-second request failure.
+Resolution: Use pagination, filtering, smaller requests, or an asynchronous job/export endpoint when available.
+Additional information: Large exports should generally be processed asynchronously.
+Escalation: Escalate if normal-sized requests time out."
+KB032,API/Integration,batch_partial_failure,Batch request partially fails,A batch operation succeeds only for some records.,Partial success; missing per-item result.,"Inspect per-item errors, retry only failed records, and use supported batch limits.",Do not blindly repeat the entire batch if it may create duplicates.,Escalate repeated failures for the same records.,"Category: API/Integration
+Intent: batch_partial_failure
+Issue: Batch request partially fails
+Problem: A batch operation succeeds only for some records.
+Symptoms: Partial success; missing per-item result.
+Resolution: Inspect per-item errors, retry only failed records, and use supported batch limits.
+Additional information: Do not blindly repeat the entire batch if it may create duplicates.
+Escalation: Escalate repeated failures for the same records."
+KB036,API/Integration,duplicate_integration_records,Integration creates duplicates,Third-party integration creates duplicate objects instead of updating existing ones.,Duplicate tickets/records on every sync.,Verify external IDs/mapping keys and reconnect the integration if its subscription or mapping was invalidated.,Matching by mutable names/titles is less reliable than stable external IDs.,Escalate persistent duplication.,"Category: API/Integration
+Intent: duplicate_integration_records
+Issue: Integration creates duplicates
+Problem: Third-party integration creates duplicate objects instead of updating existing ones.
+Symptoms: Duplicate tickets/records on every sync.
+Resolution: Verify external IDs/mapping keys and reconnect the integration if its subscription or mapping was invalidated.
+Additional information: Matching by mutable names/titles is less reliable than stable external IDs.
+Escalation: Escalate persistent duplication."
+KB034,API/Integration,idempotency,Duplicate creation after retry,A retried request creates duplicate records.,Duplicate orders/resources after timeout or retry.,Use a stable idempotency key for retried create operations and verify the documented idempotency window.,Idempotency keys must remain stable across retries.,Escalate confirmed duplicate creation despite correct keys.,"Category: API/Integration
+Intent: idempotency
+Issue: Duplicate creation after retry
+Problem: A retried request creates duplicate records.
+Symptoms: Duplicate orders/resources after timeout or retry.
+Resolution: Use a stable idempotency key for retried create operations and verify the documented idempotency window.
+Additional information: Idempotency keys must remain stable across retries.
+Escalation: Escalate confirmed duplicate creation despite correct keys."
+KB035,API/Integration,integration_not_syncing,Integration stopped syncing,Connected third-party integration no longer transfers records.,No new records; sync failure.,"Reconnect/reauthorize the integration, inspect the last successful sync, verify required fields and permissions, and retry the sync.",Deleted custom fields or revoked permissions can stop synchronization.,Escalate after configuration and permission checks fail.,"Category: API/Integration
+Intent: integration_not_syncing
+Issue: Integration stopped syncing
+Problem: Connected third-party integration no longer transfers records.
+Symptoms: No new records; sync failure.
+Resolution: Reconnect/reauthorize the integration, inspect the last successful sync, verify required fields and permissions, and retry the sync.
+Additional information: Deleted custom fields or revoked permissions can stop synchronization.
+Escalation: Escalate after configuration and permission checks fail."
+KB026,API/Integration,oauth_scope,OAuth permission missing,New permissions are not available to an existing OAuth token.,Scope added but API still denies access.,Reauthorize the integration so a new token is issued with the updated scopes.,Changing configured scopes does not necessarily modify existing tokens.,Escalate if reauthorization still returns insufficient-scope errors.,"Category: API/Integration
+Intent: oauth_scope
+Issue: OAuth permission missing
+Problem: New permissions are not available to an existing OAuth token.
+Symptoms: Scope added but API still denies access.
+Resolution: Reauthorize the integration so a new token is issued with the updated scopes.
+Additional information: Changing configured scopes does not necessarily modify existing tokens.
+Escalation: Escalate if reauthorization still returns insufficient-scope errors."
+KB031,API/Integration,pagination_error,Pagination cursor invalid,A next-page cursor cannot be reused or returns an error.,Invalid/expired cursor.,"Request a fresh page and cursor, avoid modifying parameters between cursor requests, and verify the endpoint's cursor lifetime.",Cursors may expire or depend on query parameters.,Escalate persistent invalid-cursor behavior.,"Category: API/Integration
+Intent: pagination_error
+Issue: Pagination cursor invalid
+Problem: A next-page cursor cannot be reused or returns an error.
+Symptoms: Invalid/expired cursor.
+Resolution: Request a fresh page and cursor, avoid modifying parameters between cursor requests, and verify the endpoint's cursor lifetime.
+Additional information: Cursors may expire or depend on query parameters.
+Escalation: Escalate persistent invalid-cursor behavior."
+KB033,API/Integration,rate_limit,API rate limit exceeded,Requests are rejected because the client exceeds the permitted request rate.,429 responses; throttling.,"Read rate-limit headers when available, reduce request frequency, implement exponential backoff, and batch or cache requests where appropriate.",Respect the documented rate limit.,Escalate if the customer is below the documented limit but still receives throttling.,"Category: API/Integration
+Intent: rate_limit
+Issue: API rate limit exceeded
+Problem: Requests are rejected because the client exceeds the permitted request rate.
+Symptoms: 429 responses; throttling.
+Resolution: Read rate-limit headers when available, reduce request frequency, implement exponential backoff, and batch or cache requests where appropriate.
+Additional information: Respect the documented rate limit.
+Escalation: Escalate if the customer is below the documented limit but still receives throttling."
+KB037,API/Integration,timezone_api,API timezone mismatch,API-created events appear on the wrong day or at the wrong time.,Time shifted; wrong day in calendar.,"Verify timezone fields and ISO-8601 timestamps, then compare stored UTC time with the account's display timezone.",Rendering timezone and storage timezone are separate concerns.,Escalate if timestamps are stored incorrectly.,"Category: API/Integration
+Intent: timezone_api
+Issue: API timezone mismatch
+Problem: API-created events appear on the wrong day or at the wrong time.
+Symptoms: Time shifted; wrong day in calendar.
+Resolution: Verify timezone fields and ISO-8601 timestamps, then compare stored UTC time with the account's display timezone.
+Additional information: Rendering timezone and storage timezone are separate concerns.
+Escalation: Escalate if timestamps are stored incorrectly."
+KB028,API/Integration,webhook_retries,Webhook retry storm,Customer receives a large burst of webhook events after an outage.,Many repeated webhook requests.,"Check endpoint health and idempotency handling, then use supported retry/backoff controls and rate limits.",Consumers should tolerate retries and avoid duplicate processing.,Escalate if retry volume threatens service stability.,"Category: API/Integration
+Intent: webhook_retries
+Issue: Webhook retry storm
+Problem: Customer receives a large burst of webhook events after an outage.
+Symptoms: Many repeated webhook requests.
+Resolution: Check endpoint health and idempotency handling, then use supported retry/backoff controls and rate limits.
+Additional information: Consumers should tolerate retries and avoid duplicate processing.
+Escalation: Escalate if retry volume threatens service stability."
+KB027,API/Integration,webhook_signature,Webhook signature verification failure,Customer's webhook consumer rejects events after a signing-secret change.,Invalid signature; events rejected.,"Verify the current signing secret, update the customer's environment/configuration, redeploy if necessary, and test with a fresh webhook event.",Old cached secrets commonly cause failures after rotation.,Escalate if signatures remain invalid with the confirmed current secret.,"Category: API/Integration
+Intent: webhook_signature
+Issue: Webhook signature verification failure
+Problem: Customer's webhook consumer rejects events after a signing-secret change.
+Symptoms: Invalid signature; events rejected.
+Resolution: Verify the current signing secret, update the customer's environment/configuration, redeploy if necessary, and test with a fresh webhook event.
+Additional information: Old cached secrets commonly cause failures after rotation.
+Escalation: Escalate if signatures remain invalid with the confirmed current secret."
+KB045,Account Management,account_transfer,Workspace ownership/admin transfer,Customer needs to transfer workspace administration.,Previous admin unavailable or ownership changed.,"Verify authorization, assign the appropriate admin role, and confirm access to required workspace settings.",Ownership transfers should be audited.,Escalate disputed ownership.,"Category: Account Management
+Intent: account_transfer
+Issue: Workspace ownership/admin transfer
+Problem: Customer needs to transfer workspace administration.
+Symptoms: Previous admin unavailable or ownership changed.
+Resolution: Verify authorization, assign the appropriate admin role, and confirm access to required workspace settings.
+Additional information: Ownership transfers should be audited.
+Escalation: Escalate disputed ownership."
+KB046,Account Management,audit_log_missing,Audit log missing API activity,Compliance user cannot see API-originated actions in the audit log.,UI actions logged; API actions absent.,"Verify whether API actions are supported by the audit-log scope, then inspect available request history and logging configuration.",Audit coverage may differ by operation/version.,Escalate compliance-impacting gaps.,"Category: Account Management
+Intent: audit_log_missing
+Issue: Audit log missing API activity
+Problem: Compliance user cannot see API-originated actions in the audit log.
+Symptoms: UI actions logged; API actions absent.
+Resolution: Verify whether API actions are supported by the audit-log scope, then inspect available request history and logging configuration.
+Additional information: Audit coverage may differ by operation/version.
+Escalation: Escalate compliance-impacting gaps."
+KB039,Account Management,change_email,Change account email,Customer wants to change the email associated with an account.,Old email no longer desired; new email provided.,"Verify identity and account ownership, update the email through the supported account flow, and complete any required verification.",Email changes may affect SSO and recovery.,Escalate when ownership cannot be verified.,"Category: Account Management
+Intent: change_email
+Issue: Change account email
+Problem: Customer wants to change the email associated with an account.
+Symptoms: Old email no longer desired; new email provided.
+Resolution: Verify identity and account ownership, update the email through the supported account flow, and complete any required verification.
+Additional information: Email changes may affect SSO and recovery.
+Escalation: Escalate when ownership cannot be verified."
+KB044,Account Management,custom_domain_ssl,Custom-domain SSL problem,Custom domain shows certificate/security warnings.,Expired certificate; browser security warning.,"Verify DNS validation and certificate status, renew through the supported process, and confirm the certificate chain.",DNS changes can break automated renewal.,Escalate certificate renewal failures.,"Category: Account Management
+Intent: custom_domain_ssl
+Issue: Custom-domain SSL problem
+Problem: Custom domain shows certificate/security warnings.
+Symptoms: Expired certificate; browser security warning.
+Resolution: Verify DNS validation and certificate status, renew through the supported process, and confirm the certificate chain.
+Additional information: DNS changes can break automated renewal.
+Escalation: Escalate certificate renewal failures."
+KB047,Account Management,data_residency,Data residency request,Customer needs data hosted in a specific region.,Regional compliance requirement.,Confirm the account's supported regions and contractual requirements. Use the approved migration process if a region change is supported.,Regional migration may require infrastructure assistance.,Escalate legal/compliance requirements.,"Category: Account Management
+Intent: data_residency
+Issue: Data residency request
+Problem: Customer needs data hosted in a specific region.
+Symptoms: Regional compliance requirement.
+Resolution: Confirm the account's supported regions and contractual requirements. Use the approved migration process if a region change is supported.
+Additional information: Regional migration may require infrastructure assistance.
+Escalation: Escalate legal/compliance requirements."
+KB048,Account Management,deactivated_user_data,Deactivated user data missing,Data owned by a deactivated employee appears inaccessible.,Documents/tasks disappeared after deactivation.,"Check ownership rules and backups, recover data if supported, and reassign ownership to an active user.",Deactivation should not silently destroy required business data.,Escalate data-loss incidents.,"Category: Account Management
+Intent: deactivated_user_data
+Issue: Deactivated user data missing
+Problem: Data owned by a deactivated employee appears inaccessible.
+Symptoms: Documents/tasks disappeared after deactivation.
+Resolution: Check ownership rules and backups, recover data if supported, and reassign ownership to an active user.
+Additional information: Deactivation should not silently destroy required business data.
+Escalation: Escalate data-loss incidents."
+KB040,Account Management,delete_account,Delete account,Customer requests account deletion.,Deletion request; privacy request.,"Verify identity, resolve blockers such as active billing disputes, explain irreversible consequences, then process deletion according to policy.",Deletion requirements depend on legal and retention obligations.,Escalate privacy/legal requests or unresolved disputes.,"Category: Account Management
+Intent: delete_account
+Issue: Delete account
+Problem: Customer requests account deletion.
+Symptoms: Deletion request; privacy request.
+Resolution: Verify identity, resolve blockers such as active billing disputes, explain irreversible consequences, then process deletion according to policy.
+Additional information: Deletion requirements depend on legal and retention obligations.
+Escalation: Escalate privacy/legal requests or unresolved disputes."
+KB042,Account Management,guest_access,Removed guest still has access,A guest retains access after being removed from a project.,Guest can still view/edit project.,"Verify membership and permissions, revoke the guest's project access, invalidate stale permissions/cache where supported, and retest.",Client-side state may display stale permissions.,Escalate if server-side authorization still permits access.,"Category: Account Management
+Intent: guest_access
+Issue: Removed guest still has access
+Problem: A guest retains access after being removed from a project.
+Symptoms: Guest can still view/edit project.
+Resolution: Verify membership and permissions, revoke the guest's project access, invalidate stale permissions/cache where supported, and retest.
+Additional information: Client-side state may display stale permissions.
+Escalation: Escalate if server-side authorization still permits access."
+KB041,Account Management,role_permissions,Incorrect role permissions,User has more or fewer permissions than intended.,Access denied or excessive access.,"Review role membership and permission inheritance, correct the affected user or group, and verify access after propagation.",Avoid changing an entire team when only one user is affected.,Escalate suspected unauthorized access.,"Category: Account Management
+Intent: role_permissions
+Issue: Incorrect role permissions
+Problem: User has more or fewer permissions than intended.
+Symptoms: Access denied or excessive access.
+Resolution: Review role membership and permission inheritance, correct the affected user or group, and verify access after propagation.
+Additional information: Avoid changing an entire team when only one user is affected.
+Escalation: Escalate suspected unauthorized access."
+KB043,Account Management,workspace_merge,Merge duplicate workspaces,Customer created multiple workspaces and wants to consolidate them.,Duplicate workspace; migration request.,"Identify the source and destination workspace, inventory members/projects/data, perform an approved migration, then archive the duplicate.",Merges can be destructive and require careful validation.,Escalate to the migration/admin team.,"Category: Account Management
+Intent: workspace_merge
+Issue: Merge duplicate workspaces
+Problem: Customer created multiple workspaces and wants to consolidate them.
+Symptoms: Duplicate workspace; migration request.
+Resolution: Identify the source and destination workspace, inventory members/projects/data, perform an approved migration, then archive the duplicate.
+Additional information: Merges can be destructive and require careful validation.
+Escalation: Escalate to the migration/admin team."
+KB022,Billing,cancel_subscription,Cannot find cancellation option,Customer cannot locate the subscription cancellation control.,No cancel button; cancellation unavailable.,"Check account permissions and subscription status. If self-service cancellation is unavailable, follow the approved support cancellation process.",Some contracts or billing states may require assisted cancellation.,Escalate contractual cancellation disputes.,"Category: Billing
+Intent: cancel_subscription
+Issue: Cannot find cancellation option
+Problem: Customer cannot locate the subscription cancellation control.
+Symptoms: No cancel button; cancellation unavailable.
+Resolution: Check account permissions and subscription status. If self-service cancellation is unavailable, follow the approved support cancellation process.
+Additional information: Some contracts or billing states may require assisted cancellation.
+Escalation: Escalate contractual cancellation disputes."
+KB014,Billing,duplicate_charge,Duplicate charge,Customer sees multiple charges for the same purchase.,Two or more identical charges.,"Compare transaction IDs and timestamps, determine whether one is an authorization or completed charge, and refund confirmed duplicate charges according to policy.",Do not assume two pending authorizations are permanent duplicate charges.,Escalate disputed or unauthorized transactions.,"Category: Billing
+Intent: duplicate_charge
+Issue: Duplicate charge
+Problem: Customer sees multiple charges for the same purchase.
+Symptoms: Two or more identical charges.
+Resolution: Compare transaction IDs and timestamps, determine whether one is an authorization or completed charge, and refund confirmed duplicate charges according to policy.
+Additional information: Do not assume two pending authorizations are permanent duplicate charges.
+Escalation: Escalate disputed or unauthorized transactions."
+KB019,Billing,incorrect_seat_count,Incorrect billed seat count,Customer is charged for more seats than expected.,Billed seats exceed active users.,"Compare active, deactivated, and billable users. Correct stale directory synchronization and apply an approved credit when overbilling is confirmed.",Billing definitions may count seats differently from active-user counts.,Escalate unresolved seat-count discrepancies.,"Category: Billing
+Intent: incorrect_seat_count
+Issue: Incorrect billed seat count
+Problem: Customer is charged for more seats than expected.
+Symptoms: Billed seats exceed active users.
+Resolution: Compare active, deactivated, and billable users. Correct stale directory synchronization and apply an approved credit when overbilling is confirmed.
+Additional information: Billing definitions may count seats differently from active-user counts.
+Escalation: Escalate unresolved seat-count discrepancies."
+KB024,Billing,invoice_duplicate,Duplicate invoices,Multiple invoices were generated for one billing period.,Repeated invoices for same period.,"Compare invoice IDs and billing events, void confirmed duplicates, and retain the valid invoice.",Retry jobs can sometimes create duplicate records.,Escalate if duplicate charges also occurred.,"Category: Billing
+Intent: invoice_duplicate
+Issue: Duplicate invoices
+Problem: Multiple invoices were generated for one billing period.
+Symptoms: Repeated invoices for same period.
+Resolution: Compare invoice IDs and billing events, void confirmed duplicates, and retain the valid invoice.
+Additional information: Retry jobs can sometimes create duplicate records.
+Escalation: Escalate if duplicate charges also occurred."
+KB018,Billing,invoice_missing,Invoice unavailable,Customer cannot locate or download an expected invoice.,Missing invoice; download error.,"Check billing history, verify the billing period, retry the download, and regenerate the invoice if the original document is unavailable.",Archived invoices may require regeneration.,Escalate if billing records themselves are missing or inconsistent.,"Category: Billing
+Intent: invoice_missing
+Issue: Invoice unavailable
+Problem: Customer cannot locate or download an expected invoice.
+Symptoms: Missing invoice; download error.
+Resolution: Check billing history, verify the billing period, retry the download, and regenerate the invoice if the original document is unavailable.
+Additional information: Archived invoices may require regeneration.
+Escalation: Escalate if billing records themselves are missing or inconsistent."
+KB023,Billing,negative_invoice,Negative invoice balance,Invoice shows an unexpected negative amount.,Negative balance after discounts or credits.,"Review discounts and credits, remove invalid stacking, and correct the invoice/account balance according to billing rules.",Do not remove legitimate credits without verification.,Escalate complex credit disputes.,"Category: Billing
+Intent: negative_invoice
+Issue: Negative invoice balance
+Problem: Invoice shows an unexpected negative amount.
+Symptoms: Negative balance after discounts or credits.
+Resolution: Review discounts and credits, remove invalid stacking, and correct the invoice/account balance according to billing rules.
+Additional information: Do not remove legitimate credits without verification.
+Escalation: Escalate complex credit disputes."
+KB013,Billing,payment_declined,Payment declined,Card payment fails even though the customer believes the card is valid.,Declined payment; checkout failure.,"Confirm card details, billing address/postal code, expiration, and available funds. Retry once after correcting any mismatch.",Payment processors may reject mismatched billing details.,Escalate to the payment team if valid details continue to be rejected.,"Category: Billing
+Intent: payment_declined
+Issue: Payment declined
+Problem: Card payment fails even though the customer believes the card is valid.
+Symptoms: Declined payment; checkout failure.
+Resolution: Confirm card details, billing address/postal code, expiration, and available funds. Retry once after correcting any mismatch.
+Additional information: Payment processors may reject mismatched billing details.
+Escalation: Escalate to the payment team if valid details continue to be rejected."
+KB021,Billing,proration_missing,Proration credit missing,Customer changed plans mid-cycle but expected a prorated credit.,Plan changed without expected credit.,"Verify the plan-change date and billing cycle, calculate the unused portion according to billing rules, and apply the approved adjustment.",Mobile and web flows may have different billing parameters.,Escalate billing-engine calculation discrepancies.,"Category: Billing
+Intent: proration_missing
+Issue: Proration credit missing
+Problem: Customer changed plans mid-cycle but expected a prorated credit.
+Symptoms: Plan changed without expected credit.
+Resolution: Verify the plan-change date and billing cycle, calculate the unused portion according to billing rules, and apply the approved adjustment.
+Additional information: Mobile and web flows may have different billing parameters.
+Escalation: Escalate billing-engine calculation discrepancies."
+KB015,Billing,refund_missing,Refund not received,Customer was told a refund was processed but cannot see it.,Refund absent from card statement.,"Confirm refund status and original payment method. Provide the refund reference and expected processing window. If the original payment method is unavailable, use an approved alternate method.",Bank/card processing times vary.,Escalate failed or rejected refunds.,"Category: Billing
+Intent: refund_missing
+Issue: Refund not received
+Problem: Customer was told a refund was processed but cannot see it.
+Symptoms: Refund absent from card statement.
+Resolution: Confirm refund status and original payment method. Provide the refund reference and expected processing window. If the original payment method is unavailable, use an approved alternate method.
+Additional information: Bank/card processing times vary.
+Escalation: Escalate failed or rejected refunds."
+KB017,Billing,tax_exemption,Tax exemption not applied,Eligible customer was charged tax despite having a valid exemption.,Tax charged; exemption missing.,"Verify the exemption certificate and account tax status, reapply the exemption, and issue an adjustment/refund according to policy.",Tax rules depend on jurisdiction and account information.,Escalate tax disputes or invalid documentation.,"Category: Billing
+Intent: tax_exemption
+Issue: Tax exemption not applied
+Problem: Eligible customer was charged tax despite having a valid exemption.
+Symptoms: Tax charged; exemption missing.
+Resolution: Verify the exemption certificate and account tax status, reapply the exemption, and issue an adjustment/refund according to policy.
+Additional information: Tax rules depend on jurisdiction and account information.
+Escalation: Escalate tax disputes or invalid documentation."
+KB020,Billing,trial_converted_to_paid,Unexpected trial conversion,Free trial converted to a paid subscription unexpectedly.,Unexpected charge at trial end.,"Verify trial end date and notification status. If the conversion was incorrect under the customer's agreement, process the approved refund or trial adjustment.",Check account terms before refunding.,Escalate disputes about authorization or contractual terms.,"Category: Billing
+Intent: trial_converted_to_paid
+Issue: Unexpected trial conversion
+Problem: Free trial converted to a paid subscription unexpectedly.
+Symptoms: Unexpected charge at trial end.
+Resolution: Verify trial end date and notification status. If the conversion was incorrect under the customer's agreement, process the approved refund or trial adjustment.
+Additional information: Check account terms before refunding.
+Escalation: Escalate disputes about authorization or contractual terms."
+KB016,Billing,wrong_currency,Incorrect billing currency,Invoice or dashboard displays a currency different from the account setting.,USD instead of EUR or another configured currency.,"Verify account region and currency configuration, then regenerate/correct the invoice when supported.",Regional pricing or currency-service failures can cause fallback currency.,Escalate if the currency changes without an account/configuration change.,"Category: Billing
+Intent: wrong_currency
+Issue: Incorrect billing currency
+Problem: Invoice or dashboard displays a currency different from the account setting.
+Symptoms: USD instead of EUR or another configured currency.
+Resolution: Verify account region and currency configuration, then regenerate/correct the invoice when supported.
+Additional information: Regional pricing or currency-service failures can cause fallback currency.
+Escalation: Escalate if the currency changes without an account/configuration change."
+KB080,Card Payments,card_payment_fee_charged,Fee charged for card payment,The customer was charged a fee when making a payment with their card.,"Unexpected card payment fee, extra fee when paying by card, or customer asks why a card payment has a charge.",Review the payment and identify the fee shown in the transaction details. Explain the available fee information for that payment.,This intent is specifically about a fee associated with a card payment.,Escalate if the customer disputes the charge and the fee cannot be explained from the available transaction details.,card payment fee charged fee using card extra card payment charge card transaction fee payment fee charged
+KB081,Card Payments,card_payment_not_recognised,Unrecognised card payment,The customer sees a card payment they do not recognise.,"Unknown merchant, unfamiliar card transaction, or a payment the customer says they did not make.","Review the transaction details and merchant information. If the customer still does not recognise the payment, follow the available process for reporting an unrecognised card payment.",Do not treat an unrecognised payment as a normal declined payment.,Escalate when the customer reports an unauthorised or fraudulent card payment.,card payment not recognised unknown payment unfamiliar merchant card transaction I didn't make payment not mine unrecognised card charge unknown card payment
+KB082,Card Payments,card_payment_wrong_exchange_rate,Wrong exchange rate for card payment,The customer believes the exchange rate applied to a card purchase was incorrect.,"Wrong exchange rate on purchase, incorrect currency conversion, or customer was charged more because of the exchange rate.",Review the payment currency and exchange-rate information associated with the transaction. Compare the applied conversion information with the available transaction details.,"This intent concerns exchange rates applied to card payments, not general exchange-rate information.",Escalate if the applied exchange rate appears incorrect and the transaction cannot be explained from the available data.,wrong exchange rate card payment purchase currency conversion exchange rate charged purchase exchange rate incorrect card purchase exchange rate
+KB089,Card Security,compromised_card,Card security compromise,The customer believes their card details or card have been compromised or used by someone else.,"Suspected fraudulent use, hacked card, stolen card details, or transactions the customer believes were made by someone else.",Secure the card using the available controls and review the suspicious activity. Follow the supported process for reporting suspected card compromise.,"This intent concerns suspected compromise or fraudulent use, and should not be treated as an ordinary card problem.",Escalate whenever the customer reports suspected fraudulent use or compromised card details.,compromised card hacked card fraudulent use card stolen card details someone using my card unauthorised card activity
+KB086,Cards,activate_my_card,Card activation,The customer needs to activate a new card or reports that card activation is not working.,"Cannot activate card, new card needs activation, or activation attempt failed.","Use the available card activation process in the app or through the supported activation method. If activation fails, contact support for assistance.",Activation is separate from linking a card to the app.,Escalate if the customer cannot activate the card after following the supported activation process.,activate card card activation activate new card card won't activate activation failed start using card
+KB087,Cards,card_about_to_expire,Card expiration and replacement,The customer's card is approaching its expiration date and they want to know about replacement.,"Card expiring, expired card, replacement card, new expiration date, or replacement while abroad.",Check the available replacement-card process and the customer's card status. Follow the supported replacement process for an expiring card.,This intent concerns replacement of an expiring card.,Escalate if the replacement cannot be arranged through the available process or the customer has a special replacement circumstance.,card expiring card about to expire expired card replacement new card expiration date replace expired card
+KB084,Cards,card_acceptance,Where the card can be used,"The customer wants to know which merchants, stores, or locations accept the card.","Questions about card acceptance, supported businesses, stores, or places where the card can be used.",Check the available card acceptance information for the type of transaction and merchant involved.,This intent concerns where the card can be used rather than a specific declined transaction.,Escalate if the customer reports a persistent acceptance problem that cannot be explained by the available information.,where can I use card card acceptance stores merchants businesses accept card card accepted locations card usage
+KB076,Cards,card_arrival,Card has not arrived,The customer is waiting for a card that has already been ordered and has not arrived.,"Card delivery is taking longer than expected, the customer cannot find the card, or they want to track its delivery.","Check the card delivery status and available tracking information. Confirm the delivery details associated with the order. If the card cannot be located or delivery appears to have failed, contact support for assistance.",This intent concerns a card that has already been ordered and is expected to arrive.,"Escalate if the card cannot be located, delivery appears to have failed, or the customer reports a possible lost card.",card has not arrived card hasn't arrived waiting for card new card delivery delayed card delivery status track card where is my card card still waiting card lost during delivery
+KB077,Cards,card_delivery_estimate,Card delivery estimate,The customer wants to know when a newly ordered card is expected to arrive or whether faster delivery is available.,"Questions about expected delivery date, delivery speed, fast tracking, or expedited delivery.",Check the available card delivery options and the estimated delivery information for the customer's order.,This intent concerns the expected delivery time rather than a card that is already overdue.,Escalate if the expected delivery information is unavailable or the customer reports an overdue or failed delivery.,when will card arrive card delivery estimate delivery time how long card takes expected card delivery fast tracked card express delivery card delivery date
+KB078,Cards,card_linking,Link a card to the app,The customer has a physical card and wants to link or add it to the app.,"Found card, new card not linked, card does not appear in the app, or customer wants to connect the card to the app.",Open the card management area in the app and follow the available option to link or add the physical card.,This intent concerns connecting an existing physical card to the customer's app.,Escalate if the card cannot be linked after following the available in-app process.,link card app add card to app card not linked found card link physical card card show in app connect card app
+KB079,Cards,card_not_working,Card is not working,The customer's card is not working when they attempt to use it.,"Card does not work, card is declined, or the customer cannot use the card generally.","Check whether the problem occurs for multiple transactions or locations. Verify that the card is active and not blocked. If the problem continues, contact support for further checks.","Use this intent for a general card problem when the customer has not identified a specific payment, contactless, ATM, or card-security issue.",Escalate if the card remains unusable after basic checks or if there is a suspected security issue.,card not working card doesn't work card won't work unable to use card broken card card not usable card stopped working
+KB083,Cards,card_swallowed,Card retained by ATM,The customer's card was retained or swallowed by an ATM.,"ATM kept the card, card trapped inside ATM, or ATM did not return the card.",Do not attempt to force the card out of the ATM. Follow the available card-replacement or card-security process and contact support if further assistance is required.,This intent specifically concerns a physical card retained by an ATM.,Escalate because the physical card has been retained by an ATM and may require replacement or security action.,ATM swallowed card ATM kept card card trapped ATM card not returned card retained by ATM machine took my card
+KB088,Cards,change_pin,Change card PIN,The customer wants to change the PIN associated with their card.,"Request to change PIN, choose a different PIN, or ask where the PIN can be changed.",Use the supported PIN-change process and follow the instructions provided for changing the card PIN.,This intent concerns voluntarily changing the PIN. A blocked PIN is handled separately.,Escalate if the customer cannot change the PIN using the supported process.,change PIN change pin number new PIN different PIN update card PIN modify PIN
+KB090,Cards,contactless_not_working,Contactless payment not working,The customer cannot make a contactless payment with their card.,"Contactless payments fail, contactless does not work, or contactless payment is rejected.","Try the supported contactless troubleshooting steps and check whether the physical card works through another supported payment method. If contactless remains unavailable, contact support.",Use this intent for contactless-specific problems rather than general card payment declines.,Escalate if contactless remains unavailable after supported troubleshooting.,contactless not working contactless payment fails tap payment doesn't work contactless card payment contactless rejected
+KB092,Cards,get_physical_card,Physical card information,The customer is asking for information about obtaining or using a physical card.,"Questions about a physical card, including basic physical card information.",Provide the available information about physical cards and direct the customer to the supported card-ordering process when they want to obtain one.,"The training data for this intent contains some noisy PIN-related examples, so this KB entry focuses on the physical-card meaning of the intent.",Escalate if the customer's physical-card request cannot be handled through the supported process.,physical card get physical card physical bank card card information obtain physical card
+KB091,Cards,getting_spare_card,Additional or spare card,The customer wants an additional physical card.,"Request for spare card, extra card, additional physical card, or questions about additional-card charges.",Check the available options for ordering an additional physical card and any applicable information shown by the supported ordering process.,This intent concerns an additional card rather than the customer's first physical card.,Escalate if the additional-card request cannot be completed through the supported process.,spare card extra card additional card second card more physical cards additional card charge
+KB085,Cards,lost_or_stolen_card,Lost or stolen card,The customer has lost their card or believes the card has been stolen.,"Lost card, stolen card, missing wallet containing the card, or request to replace a stolen card.",Secure the missing card using the available card controls and follow the process for reporting and replacing a lost or stolen card.,A missing physical card should be treated separately from an unrecognised payment.,Escalate if the customer reports suspected fraudulent use of the missing card.,lost card stolen card missing card report stolen card replace stolen card lost wallet card missing physical card
+KB093,Cards,order_physical_card,Order a physical card,The customer wants to order or request a physical card.,"Questions about requesting a card, physical card cost, or where a physical card can be delivered.",Use the supported physical-card ordering process and review the available delivery and pricing information before submitting the order.,This intent is specifically about placing an order for a physical card.,Escalate if the customer cannot place the order through the supported process.,order physical card request card get card physical card card cost card price card delivery order new card
+KB094,Cards,visa_or_mastercard,Visa or Mastercard,The customer wants to know whether the card is Visa or Mastercard or whether a preferred card network is available.,Questions about Visa versus Mastercard and preference for a particular card network.,Check the available card-network options and provide the applicable information for the customer's card.,"This intent concerns the card network, not general card acceptance.",Escalate if the customer has a card-network request that cannot be handled through the available options.,visa mastercard Visa or Mastercard card network mastercard card visa card choose mastercard
+KB004,Login/Authentication,2fa_sms_not_received,SMS 2FA code not received,Customer does not receive a login verification SMS.,No SMS; delayed SMS; carrier-specific delivery failure.,"Confirm the registered phone number, wait briefly, request one new code, and use an alternate verification method if available.",Repeatedly requesting codes can invalidate earlier codes.,Escalate carrier-specific or persistent delivery failures.,"Category: Login/Authentication
+Intent: 2fa_sms_not_received
+Issue: SMS 2FA code not received
+Problem: Customer does not receive a login verification SMS.
+Symptoms: No SMS; delayed SMS; carrier-specific delivery failure.
+Resolution: Confirm the registered phone number, wait briefly, request one new code, and use an alternate verification method if available.
+Additional information: Repeatedly requesting codes can invalidate earlier codes.
+Escalation: Escalate carrier-specific or persistent delivery failures."
+KB002,Login/Authentication,account_locked,Account locked,Customer is locked out after too many failed login attempts.,Lockout message; repeated login failures.,"Verify identity, wait for the lockout period if applicable, then reset the password or unlock the account through the supported admin flow.",Do not bypass identity verification.,Escalate suspected account compromise.,"Category: Login/Authentication
+Intent: account_locked
+Issue: Account locked
+Problem: Customer is locked out after too many failed login attempts.
+Symptoms: Lockout message; repeated login failures.
+Resolution: Verify identity, wait for the lockout period if applicable, then reset the password or unlock the account through the supported admin flow.
+Additional information: Do not bypass identity verification.
+Escalation: Escalate suspected account compromise."
+KB011,Login/Authentication,captcha_not_loading,CAPTCHA does not load,Customer cannot submit the login form because CAPTCHA does not render.,Blank CAPTCHA; login blocked.,"Disable interfering browser extensions, verify corporate firewall/allowlist rules, reload the page, and retry in a supported browser.",Security software may block CAPTCHA resources.,Escalate when the customer's network blocks the required vendor domain.,"Category: Login/Authentication
+Intent: captcha_not_loading
+Issue: CAPTCHA does not load
+Problem: Customer cannot submit the login form because CAPTCHA does not render.
+Symptoms: Blank CAPTCHA; login blocked.
+Resolution: Disable interfering browser extensions, verify corporate firewall/allowlist rules, reload the page, and retry in a supported browser.
+Additional information: Security software may block CAPTCHA resources.
+Escalation: Escalate when the customer's network blocks the required vendor domain."
+KB006,Login/Authentication,email_verification,Verification email not received,Customer did not receive an email verification or activation message.,Missing verification email.,"Confirm the email address, check spam/quarantine, verify corporate mail rules, and resend the message.",A typo in the registered address can prevent delivery.,Escalate if delivery remains unsuccessful after address and mail-system checks.,"Category: Login/Authentication
+Intent: email_verification
+Issue: Verification email not received
+Problem: Customer did not receive an email verification or activation message.
+Symptoms: Missing verification email.
+Resolution: Confirm the email address, check spam/quarantine, verify corporate mail rules, and resend the message.
+Additional information: A typo in the registered address can prevent delivery.
+Escalation: Escalate if delivery remains unsuccessful after address and mail-system checks."
+KB005,Login/Authentication,magic_link_expired,Magic link expired,Passwordless login link expires before the customer can use it.,Expired login link; delayed email.,"Request a new magic link and open it promptly. If corporate email filtering delays delivery, use an alternate login method or have the mail administrator review delivery.",Link validity is time-limited.,Escalate repeated delivery delays.,"Category: Login/Authentication
+Intent: magic_link_expired
+Issue: Magic link expired
+Problem: Passwordless login link expires before the customer can use it.
+Symptoms: Expired login link; delayed email.
+Resolution: Request a new magic link and open it promptly. If corporate email filtering delays delivery, use an alternate login method or have the mail administrator review delivery.
+Additional information: Link validity is time-limited.
+Escalation: Escalate repeated delivery delays."
+KB010,Login/Authentication,mobile_login_failure,Mobile login fails while web login works,Credentials work on the website but fail in the mobile application.,Mobile says invalid credentials; web login succeeds.,"Update the mobile app, retry authentication, refresh the session/token, and verify that the mobile client is using a supported authentication API.",Old client versions can use outdated authentication endpoints.,Escalate if current app version still fails.,"Category: Login/Authentication
+Intent: mobile_login_failure
+Issue: Mobile login fails while web login works
+Problem: Credentials work on the website but fail in the mobile application.
+Symptoms: Mobile says invalid credentials; web login succeeds.
+Resolution: Update the mobile app, retry authentication, refresh the session/token, and verify that the mobile client is using a supported authentication API.
+Additional information: Old client versions can use outdated authentication endpoints.
+Escalation: Escalate if current app version still fails."
+KB001,Login/Authentication,password_reset,Password reset,Customer forgot their password or cannot sign in with the current password.,Password rejected; reset requested.,1. Select Forgot Password. 2. Enter the registered email. 3. Open the reset link. 4. Create a new password. 5. Sign in again.,Reset links may expire.,Escalate if the customer cannot access the registered email or repeated resets fail.,"Category: Login/Authentication
+Intent: password_reset
+Issue: Password reset
+Problem: Customer forgot their password or cannot sign in with the current password.
+Symptoms: Password rejected; reset requested.
+Resolution: 1. Select Forgot Password. 2. Enter the registered email. 3. Open the reset link. 4. Create a new password. 5. Sign in again.
+Additional information: Reset links may expire.
+Escalation: Escalate if the customer cannot access the registered email or repeated resets fail."
+KB009,Login/Authentication,session_expiry,Session expires unexpectedly,User is logged out repeatedly or immediately after login.,Unexpected logout; remember-me ineffective.,"Clear stale browser session data, test without extensions, verify cookie settings, and check session configuration.",Third-party cookie blocking or incorrect cookie expiry can cause this.,Escalate when the issue affects multiple browsers/users.,"Category: Login/Authentication
+Intent: session_expiry
+Issue: Session expires unexpectedly
+Problem: User is logged out repeatedly or immediately after login.
+Symptoms: Unexpected logout; remember-me ineffective.
+Resolution: Clear stale browser session data, test without extensions, verify cookie settings, and check session configuration.
+Additional information: Third-party cookie blocking or incorrect cookie expiry can cause this.
+Escalation: Escalate when the issue affects multiple browsers/users."
+KB008,Login/Authentication,sso_certificate,SSO certificate problem,SSO stopped working after an identity-provider certificate change.,SAML certificate error; authentication failure after certificate renewal.,"Update the application with the current IdP metadata/certificate, clear stale configuration where supported, and test with a fresh session.",Certificate rotation must be coordinated with the service configuration.,Escalate if the new certificate is valid but authentication still fails.,"Category: Login/Authentication
+Intent: sso_certificate
+Issue: SSO certificate problem
+Problem: SSO stopped working after an identity-provider certificate change.
+Symptoms: SAML certificate error; authentication failure after certificate renewal.
+Resolution: Update the application with the current IdP metadata/certificate, clear stale configuration where supported, and test with a fresh session.
+Additional information: Certificate rotation must be coordinated with the service configuration.
+Escalation: Escalate if the new certificate is valid but authentication still fails."
+KB007,Login/Authentication,sso_redirect_loop,SSO redirect loop,User is repeatedly redirected between the application and identity provider.,Infinite SSO redirect; login never completes.,"Verify SAML/OIDC configuration, certificate/metadata validity, redirect URI, and cached identity-provider configuration. Refresh metadata when appropriate.",Certificate or stale metadata changes can cause loops.,Escalate to the identity/integration team when configuration is correct but looping continues.,"Category: Login/Authentication
+Intent: sso_redirect_loop
+Issue: SSO redirect loop
+Problem: User is repeatedly redirected between the application and identity provider.
+Symptoms: Infinite SSO redirect; login never completes.
+Resolution: Verify SAML/OIDC configuration, certificate/metadata validity, redirect URI, and cached identity-provider configuration. Refresh metadata when appropriate.
+Additional information: Certificate or stale metadata changes can cause loops.
+Escalation: Escalate to the identity/integration team when configuration is correct but looping continues."
+KB003,Login/Authentication,two_factor_authentication,2FA code rejected,Authenticator codes are rejected even though the customer believes they are correct.,Invalid or expired 2FA codes.,"Enable automatic date/time synchronization on the device, generate a fresh code, and retry. If available, re-enroll the authenticator.",Device clock drift can invalidate time-based codes.,Escalate if re-enrollment does not resolve the issue.,"Category: Login/Authentication
+Intent: two_factor_authentication
+Issue: 2FA code rejected
+Problem: Authenticator codes are rejected even though the customer believes they are correct.
+Symptoms: Invalid or expired 2FA codes.
+Resolution: Enable automatic date/time synchronization on the device, generate a fresh code, and retry. If available, re-enroll the authenticator.
+Additional information: Device clock drift can invalidate time-based codes.
+Escalation: Escalate if re-enrollment does not resolve the issue."
+KB012,Login/Authentication,wrong_login_domain,Login redirects to wrong branded portal,Customer is shown the wrong tenant branding or portal.,Wrong logo/tenant; incorrect portal URL.,"Verify tenant/domain configuration, clear stale cache, and retry using the correct tenant URL.",Cached tenant assets can produce incorrect branding.,Escalate immediately if another customer's data or authenticated session is exposed.,"Category: Login/Authentication
+Intent: wrong_login_domain
+Issue: Login redirects to wrong branded portal
+Problem: Customer is shown the wrong tenant branding or portal.
+Symptoms: Wrong logo/tenant; incorrect portal URL.
+Resolution: Verify tenant/domain configuration, clear stale cache, and retry using the correct tenant URL.
+Additional information: Cached tenant assets can produce incorrect branding.
+Escalation: Escalate immediately if another customer's data or authenticated session is exposed."
+KB075,Performance,large_export,Large export times out,Large export cannot complete within the synchronous request window.,Export timeout.,"Use asynchronous export/job processing, filter the data, or split the export into smaller requests.",Asynchronous exports are preferred for very large datasets.,Escalate if small exports also time out.,"Category: Performance
+Intent: large_export
+Issue: Large export times out
+Problem: Large export cannot complete within the synchronous request window.
+Symptoms: Export timeout.
+Resolution: Use asynchronous export/job processing, filter the data, or split the export into smaller requests.
+Additional information: Asynchronous exports are preferred for very large datasets.
+Escalation: Escalate if small exports also time out."
+KB074,Performance,large_import,Large import crashes browser,Large spreadsheet/file import freezes or crashes the browser.,Tab becomes unresponsive during import.,Split the import into smaller batches or use the asynchronous/server-side import flow if available.,Very large client-side processing can exhaust browser memory.,Escalate if supported import sizes consistently crash.,"Category: Performance
+Intent: large_import
+Issue: Large import crashes browser
+Problem: Large spreadsheet/file import freezes or crashes the browser.
+Symptoms: Tab becomes unresponsive during import.
+Resolution: Split the import into smaller batches or use the asynchronous/server-side import flow if available.
+Additional information: Very large client-side processing can exhaust browser memory.
+Escalation: Escalate if supported import sizes consistently crash."
+KB073,Performance,mobile_battery,Mobile app battery drain,Mobile app uses unusually high battery.,Battery drains while app is open.,"Update the app, reduce unnecessary background activity, and check whether aggressive polling is occurring.",Battery behavior can vary by device/OS version.,Escalate reproducible excessive battery usage.,"Category: Performance
+Intent: mobile_battery
+Issue: Mobile app battery drain
+Problem: Mobile app uses unusually high battery.
+Symptoms: Battery drains while app is open.
+Resolution: Update the app, reduce unnecessary background activity, and check whether aggressive polling is occurring.
+Additional information: Battery behavior can vary by device/OS version.
+Escalation: Escalate reproducible excessive battery usage."
+KB072,Performance,slow_api,API response is slow,API requests take much longer than expected.,High response latency.,"Measure latency by endpoint, reduce payload size, paginate results, and check rate limiting or service status.",Large queries and uncached resources can be slower.,Escalate sustained latency affecting normal-sized requests.,"Category: Performance
+Intent: slow_api
+Issue: API response is slow
+Problem: API requests take much longer than expected.
+Symptoms: High response latency.
+Resolution: Measure latency by endpoint, reduce payload size, paginate results, and check rate limiting or service status.
+Additional information: Large queries and uncached resources can be slower.
+Escalation: Escalate sustained latency affecting normal-sized requests."
+KB071,Performance,slow_dashboard,Dashboard is slow,Dashboard becomes slower as the account accumulates data.,Long load time; timeout.,"Check dataset size, filters, browser performance, and service status. Use pagination/filtering where available.",Large result sets can increase query and rendering time.,Escalate persistent high latency with timestamps and account scope.,"Category: Performance
+Intent: slow_dashboard
+Issue: Dashboard is slow
+Problem: Dashboard becomes slower as the account accumulates data.
+Symptoms: Long load time; timeout.
+Resolution: Check dataset size, filters, browser performance, and service status. Use pagination/filtering where available.
+Additional information: Large result sets can increase query and rendering time.
+Escalation: Escalate persistent high latency with timestamps and account scope."
+KB050,Subscription,auto_renewal,Unexpected auto-renewal,Customer was charged despite believing renewal was disabled.,Renewal charge; auto-renewal disabled.,"Verify the saved renewal setting and renewal event, then apply refund/credit according to policy if the renewal was incorrect.",Record the timestamp of the opt-out setting.,Escalate disputed authorization.,"Category: Subscription
+Intent: auto_renewal
+Issue: Unexpected auto-renewal
+Problem: Customer was charged despite believing renewal was disabled.
+Symptoms: Renewal charge; auto-renewal disabled.
+Resolution: Verify the saved renewal setting and renewal event, then apply refund/credit according to policy if the renewal was incorrect.
+Additional information: Record the timestamp of the opt-out setting.
+Escalation: Escalate disputed authorization."
+KB049,Subscription,cancel_end_of_term,Cancellation access ended early,Customer expected access through the paid period but access stopped immediately after cancellation.,Subscription canceled; access removed early.,"Verify the billing period and cancellation timestamp, restore access through the paid term when policy requires it, and correct the cancellation state.",Contract terms can differ by plan.,Escalate contract-specific disputes.,"Category: Subscription
+Intent: cancel_end_of_term
+Issue: Cancellation access ended early
+Problem: Customer expected access through the paid period but access stopped immediately after cancellation.
+Symptoms: Subscription canceled; access removed early.
+Resolution: Verify the billing period and cancellation timestamp, restore access through the paid term when policy requires it, and correct the cancellation state.
+Additional information: Contract terms can differ by plan.
+Escalation: Escalate contract-specific disputes."
+KB053,Subscription,downgrade,Downgrade subscription,Customer wants a lower tier but is blocked.,Downgrade unavailable; usage too high.,"Compare current usage with the lower-tier limits, reduce usage if necessary, then retry the downgrade.",Some plans may require end-of-term changes.,Escalate contract restrictions.,"Category: Subscription
+Intent: downgrade
+Issue: Downgrade subscription
+Problem: Customer wants a lower tier but is blocked.
+Symptoms: Downgrade unavailable; usage too high.
+Resolution: Compare current usage with the lower-tier limits, reduce usage if necessary, then retry the downgrade.
+Additional information: Some plans may require end-of-term changes.
+Escalation: Escalate contract restrictions."
+KB055,Subscription,feature_access_after_downgrade,Premium feature remains after downgrade,Customer still sees premium features after moving to a lower plan.,Old features remain available.,"Verify the new plan, refresh entitlement/feature flags, and confirm access after propagation.",Entitlement caches can temporarily retain old access.,Escalate security-sensitive entitlement failures.,"Category: Subscription
+Intent: feature_access_after_downgrade
+Issue: Premium feature remains after downgrade
+Problem: Customer still sees premium features after moving to a lower plan.
+Symptoms: Old features remain available.
+Resolution: Verify the new plan, refresh entitlement/feature flags, and confirm access after propagation.
+Additional information: Entitlement caches can temporarily retain old access.
+Escalation: Escalate security-sensitive entitlement failures."
+KB058,Subscription,nonprofit_discount,Nonprofit discount issue,Eligible nonprofit customer cannot obtain or retain the nonprofit discount.,Verification rejected; discount absent.,"Verify nonprofit documentation and registration details, correct submission errors, and reprocess verification.",Discount eligibility requires valid documentation.,Escalate ambiguous eligibility decisions.,"Category: Subscription
+Intent: nonprofit_discount
+Issue: Nonprofit discount issue
+Problem: Eligible nonprofit customer cannot obtain or retain the nonprofit discount.
+Symptoms: Verification rejected; discount absent.
+Resolution: Verify nonprofit documentation and registration details, correct submission errors, and reprocess verification.
+Additional information: Discount eligibility requires valid documentation.
+Escalation: Escalate ambiguous eligibility decisions."
+KB051,Subscription,pause_subscription,Pause subscription,Customer wants to temporarily stop billing without deleting the account.,Temporary leave; wants to preserve data.,"Check whether subscription pause is supported, apply the approved pause option, and confirm the new billing/resumption date.",Do not cancel if the customer explicitly needs a temporary pause.,Escalate if the plan does not support pausing.,"Category: Subscription
+Intent: pause_subscription
+Issue: Pause subscription
+Problem: Customer wants to temporarily stop billing without deleting the account.
+Symptoms: Temporary leave; wants to preserve data.
+Resolution: Check whether subscription pause is supported, apply the approved pause option, and confirm the new billing/resumption date.
+Additional information: Do not cancel if the customer explicitly needs a temporary pause.
+Escalation: Escalate if the plan does not support pausing."
+KB056,Subscription,plan_limits,Plan limit incorrect,Customer is blocked by a limit that does not match the subscribed plan.,Unexpected usage limit.,"Verify plan type, account flags, and the feature's documented limit; correct entitlement configuration if inconsistent.",Team and individual plans may have different limits.,Escalate persistent entitlement mismatches.,"Category: Subscription
+Intent: plan_limits
+Issue: Plan limit incorrect
+Problem: Customer is blocked by a limit that does not match the subscribed plan.
+Symptoms: Unexpected usage limit.
+Resolution: Verify plan type, account flags, and the feature's documented limit; correct entitlement configuration if inconsistent.
+Additional information: Team and individual plans may have different limits.
+Escalation: Escalate persistent entitlement mismatches."
+KB057,Subscription,referral_credit,Referral credit missing,Customer referred another user but did not receive the expected credit.,Referral completed; no credit.,"Verify referral attribution, qualifying purchase, and tracking window, then apply credit according to the referral policy if eligible.",Referral programs usually have eligibility conditions.,Escalate disputed eligibility.,"Category: Subscription
+Intent: referral_credit
+Issue: Referral credit missing
+Problem: Customer referred another user but did not receive the expected credit.
+Symptoms: Referral completed; no credit.
+Resolution: Verify referral attribution, qualifying purchase, and tracking window, then apply credit according to the referral policy if eligible.
+Additional information: Referral programs usually have eligibility conditions.
+Escalation: Escalate disputed eligibility."
+KB054,Subscription,subscription_past_due,Subscription incorrectly marked past due,Account shows past-due status after successful payment.,Past-due banner despite successful payment.,"Verify payment processor status and transaction ID, refresh subscription state, and confirm the account reflects the successful payment.",Processor-to-subscription synchronization can lag.,Escalate if payment status and subscription status remain inconsistent.,"Category: Subscription
+Intent: subscription_past_due
+Issue: Subscription incorrectly marked past due
+Problem: Account shows past-due status after successful payment.
+Symptoms: Past-due banner despite successful payment.
+Resolution: Verify payment processor status and transaction ID, refresh subscription state, and confirm the account reflects the successful payment.
+Additional information: Processor-to-subscription synchronization can lag.
+Escalation: Escalate if payment status and subscription status remain inconsistent."
+KB052,Subscription,upgrade,Upgrade subscription,Customer wants a higher subscription tier.,Needs more features/limits.,"Review available plans, confirm pricing and effective date, then complete the supported upgrade flow.",Proration may apply.,Escalate enterprise/custom-contract upgrades.,"Category: Subscription
+Intent: upgrade
+Issue: Upgrade subscription
+Problem: Customer wants a higher subscription tier.
+Symptoms: Needs more features/limits.
+Resolution: Review available plans, confirm pricing and effective date, then complete the supported upgrade flow.
+Additional information: Proration may apply.
+Escalation: Escalate enterprise/custom-contract upgrades."
+KB059,Technical/Bug,browser_issue,Browser-specific issue,A feature works in one browser but fails in another.,Browser-specific failure.,"Test in a supported browser, disable extensions, clear site data, and compare console/network errors if troubleshooting requires them.",Browser-specific security and storage behavior can differ.,Escalate confirmed browser-specific product defects.,"Category: Technical/Bug
+Intent: browser_issue
+Issue: Browser-specific issue
+Problem: A feature works in one browser but fails in another.
+Symptoms: Browser-specific failure.
+Resolution: Test in a supported browser, disable extensions, clear site data, and compare console/network errors if troubleshooting requires them.
+Additional information: Browser-specific security and storage behavior can differ.
+Escalation: Escalate confirmed browser-specific product defects."
+KB064,Technical/Bug,calendar_timezone,Calendar event time incorrect,Calendar events appear one hour or more off.,Time shifted around timezone/DST changes.,"Verify the account timezone, event timezone, and daylight-saving transition. Recreate only if the stored event time is actually incorrect.",Timezone display and stored timestamps should be checked separately.,Escalate systematic timezone rendering errors.,"Category: Technical/Bug
+Intent: calendar_timezone
+Issue: Calendar event time incorrect
+Problem: Calendar events appear one hour or more off.
+Symptoms: Time shifted around timezone/DST changes.
+Resolution: Verify the account timezone, event timezone, and daylight-saving transition. Recreate only if the stored event time is actually incorrect.
+Additional information: Timezone display and stored timestamps should be checked separately.
+Escalation: Escalate systematic timezone rendering errors."
+KB067,Technical/Bug,clipboard,Copy button fails,Copy-to-clipboard action does nothing.,Clipboard permission error; embedded page.,"Retry in a supported browser, check iframe permissions and browser clipboard permissions, and use the provided fallback copy method if available.",Embedded contexts may require explicit clipboard permission.,Escalate if the supported configuration still fails.,"Category: Technical/Bug
+Intent: clipboard
+Issue: Copy button fails
+Problem: Copy-to-clipboard action does nothing.
+Symptoms: Clipboard permission error; embedded page.
+Resolution: Retry in a supported browser, check iframe permissions and browser clipboard permissions, and use the provided fallback copy method if available.
+Additional information: Embedded contexts may require explicit clipboard permission.
+Escalation: Escalate if the supported configuration still fails."
+KB061,Technical/Bug,dark_mode,Dark mode preference resets,Dark mode does not persist between sessions.,Preference resets after browser/app restart.,"Re-enable the setting, verify account preference storage, and test after a fresh session.",Session-only storage can cause preferences to reset.,Escalate if the setting is not persisted server-side.,"Category: Technical/Bug
+Intent: dark_mode
+Issue: Dark mode preference resets
+Problem: Dark mode does not persist between sessions.
+Symptoms: Preference resets after browser/app restart.
+Resolution: Re-enable the setting, verify account preference storage, and test after a fresh session.
+Additional information: Session-only storage can cause preferences to reset.
+Escalation: Escalate if the setting is not persisted server-side."
+KB069,Technical/Bug,data_encoding,Text truncated or corrupted,Special characters or emoji disappear from saved text.,Text truncation; character corruption.,Retry with supported input and capture the exact characters causing the issue.,Character encoding problems can affect certain Unicode characters.,Escalate reproducible encoding failures.,"Category: Technical/Bug
+Intent: data_encoding
+Issue: Text truncated or corrupted
+Problem: Special characters or emoji disappear from saved text.
+Symptoms: Text truncation; character corruption.
+Resolution: Retry with supported input and capture the exact characters causing the issue.
+Additional information: Character encoding problems can affect certain Unicode characters.
+Escalation: Escalate reproducible encoding failures."
+KB060,Technical/Bug,file_upload,File upload fails,Customer cannot upload a file.,Upload button/drag-and-drop fails.,"Verify file type and size limits, test the standard browse upload, retry in a supported browser, and check network restrictions.",Drag-and-drop can have browser/OS-specific behavior.,Escalate reproducible failures with valid files.,"Category: Technical/Bug
+Intent: file_upload
+Issue: File upload fails
+Problem: Customer cannot upload a file.
+Symptoms: Upload button/drag-and-drop fails.
+Resolution: Verify file type and size limits, test the standard browse upload, retry in a supported browser, and check network restrictions.
+Additional information: Drag-and-drop can have browser/OS-specific behavior.
+Escalation: Escalate reproducible failures with valid files."
+KB068,Technical/Bug,image_orientation,Uploaded image rotated,Phone photo appears sideways after upload.,Image orientation incorrect.,Re-upload using a supported format or rotate the image locally if needed; report reproducible EXIF orientation failures.,Phone images may contain EXIF orientation metadata.,Escalate if many image formats are affected.,"Category: Technical/Bug
+Intent: image_orientation
+Issue: Uploaded image rotated
+Problem: Phone photo appears sideways after upload.
+Symptoms: Image orientation incorrect.
+Resolution: Re-upload using a supported format or rotate the image locally if needed; report reproducible EXIF orientation failures.
+Additional information: Phone images may contain EXIF orientation metadata.
+Escalation: Escalate if many image formats are affected."
+KB066,Technical/Bug,keyboard_shortcuts,Keyboard shortcuts stop working,Shortcuts stop responding after opening a dialog/modal.,Shortcuts inactive after modal closes.,"Close the modal, restore focus to the main page, and retry. If reproducible, capture the modal sequence and browser details.",Focus management can block keyboard listeners.,Escalate reproducible UI defects.,"Category: Technical/Bug
+Intent: keyboard_shortcuts
+Issue: Keyboard shortcuts stop working
+Problem: Shortcuts stop responding after opening a dialog/modal.
+Symptoms: Shortcuts inactive after modal closes.
+Resolution: Close the modal, restore focus to the main page, and retry. If reproducible, capture the modal sequence and browser details.
+Additional information: Focus management can block keyboard listeners.
+Escalation: Escalate reproducible UI defects."
+KB063,Technical/Bug,notification_count,Unread notification count incorrect,Notification badge remains nonzero after notifications are read.,Unread count stuck.,"Refresh the page, verify all notifications are marked read, and test across tabs/devices.",Concurrent tabs can create stale counts.,Escalate persistent count synchronization bugs.,"Category: Technical/Bug
+Intent: notification_count
+Issue: Unread notification count incorrect
+Problem: Notification badge remains nonzero after notifications are read.
+Symptoms: Unread count stuck.
+Resolution: Refresh the page, verify all notifications are marked read, and test across tabs/devices.
+Additional information: Concurrent tabs can create stale counts.
+Escalation: Escalate persistent count synchronization bugs."
+KB062,Technical/Bug,pdf_export,PDF export incorrect,"Exported PDF is cut off, malformed, or missing content.",Columns clipped; layout incorrect.,"Retry export, reduce extremely wide content, and use landscape or supported export settings where available.",Wide tables may require responsive rendering.,Escalate reproducible export defects.,"Category: Technical/Bug
+Intent: pdf_export
+Issue: PDF export incorrect
+Problem: Exported PDF is cut off, malformed, or missing content.
+Symptoms: Columns clipped; layout incorrect.
+Resolution: Retry export, reduce extremely wide content, and use landscape or supported export settings where available.
+Additional information: Wide tables may require responsive rendering.
+Escalation: Escalate reproducible export defects."
+KB070,Technical/Bug,scheduled_report,Scheduled report stopped,Previously working scheduled report no longer arrives.,No scheduled email; no visible error.,"Check schedule status, recipient address, email bounce/quarantine, and report job history; re-enable the schedule if disabled.",A previous email bounce can disable some scheduled jobs.,Escalate repeated scheduler failures.,"Category: Technical/Bug
+Intent: scheduled_report
+Issue: Scheduled report stopped
+Problem: Previously working scheduled report no longer arrives.
+Symptoms: No scheduled email; no visible error.
+Resolution: Check schedule status, recipient address, email bounce/quarantine, and report job history; re-enable the schedule if disabled.
+Additional information: A previous email bounce can disable some scheduled jobs.
+Escalation: Escalate repeated scheduler failures."
+KB065,Technical/Bug,search_not_matching,Search misses valid records,Search fails to return records that appear to match the query.,No results for known record.,"Try normalized spelling, remove unnecessary filters, and verify indexing status.",Diacritics and normalization can affect matching.,Escalate indexing defects.,"Category: Technical/Bug
+Intent: search_not_matching
+Issue: Search misses valid records
+Problem: Search fails to return records that appear to match the query.
+Symptoms: No results for known record.
+Resolution: Try normalized spelling, remove unnecessary filters, and verify indexing status.
+Additional information: Diacritics and normalization can affect matching.
+Escalation: Escalate indexing defects."
+KB095,Transfers,balance_not_updated_after_bank_transfer,Bank transfer balance not updated,"A bank transfer was completed, but the available account balance has not been updated yet.",Bank transfer completed; balance still shows the previous amount; transferred funds are not visible in the account.,"1. Confirm that the bank transfer was submitted successfully.
+2. Check the transfer status and transaction details.
+3. Allow the normal processing time for the transfer to complete.
+4. If the transfer has completed but the balance is still incorrect, contact support with the transfer details.",Bank transfers may take time to appear depending on the transfer method and processing status.,Escalate if the transfer is confirmed completed but the account balance remains incorrect or the transfer cannot be located.,"Bank transfer balance not updated
+A bank transfer was completed, but the available account balance has not been updated yet.
+Bank transfer completed; balance still shows the previous amount; transferred funds are not visible in the account.
+1. Confirm that the bank transfer was submitted successfully.
+2. Check the transfer status and transaction details.
+3. Allow the normal processing time for the transfer to complete.
+4. If the transfer has completed but the balance is still incorrect, contact support with the transfer details.
+Bank transfers may take time to appear depending on the transfer method and processing status.
+Escalate if the transfer is confirmed completed but the account balance remains incorrect or the transfer cannot be located."
+KB096,Transfers,beneficiary_not_allowed,Beneficiary cannot be added or used,"A customer cannot add, select, or make a transfer to a beneficiary.",Beneficiary cannot be added; beneficiary is unavailable; transfer to a beneficiary is blocked or rejected.,"1. Check that the beneficiary details are entered correctly.
+2. Confirm that the beneficiary is supported for the intended transfer.
+3. Retry the operation after correcting any invalid details.
+4. If the beneficiary remains unavailable, contact support.","Beneficiary availability can depend on account, transfer, or recipient restrictions.",Escalate if a valid beneficiary cannot be added or used after the customer has confirmed the details.,"Beneficiary cannot be added or used
+A customer cannot add, select, or make a transfer to a beneficiary.
+Beneficiary cannot be added; beneficiary is unavailable; transfer to a beneficiary is blocked or rejected.
+1. Check that the beneficiary details are entered correctly.
+2. Confirm that the beneficiary is supported for the intended transfer.
+3. Retry the operation after correcting any invalid details.
+4. If the beneficiary remains unavailable, contact support.
+Beneficiary availability can depend on account, transfer, or recipient restrictions.
+Escalate if a valid beneficiary cannot be added or used after the customer has confirmed the details."
+KB097,Transfers,cancel_transfer,Cancel a transfer,A customer wants to cancel a transfer.,Customer sent a transfer by mistake; customer wants to stop or cancel a transfer.,"1. Check the current transfer status.
+2. If cancellation is available for the current status, follow the available cancellation process.
+3. If the transfer has already been processed, cancellation may no longer be possible.
+4. Contact support if the transfer needs urgent intervention.",Whether a transfer can be cancelled depends on its current processing status.,Escalate urgent cancellation requests or cases where the transfer cannot be cancelled through the available process.,"Cancel a transfer
+A customer wants to cancel a transfer.
+Customer sent a transfer by mistake; customer wants to stop or cancel a transfer.
+1. Check the current transfer status.
+2. If cancellation is available for the current status, follow the available cancellation process.
+3. If the transfer has already been processed, cancellation may no longer be possible.
+4. Contact support if the transfer needs urgent intervention.
+Whether a transfer can be cancelled depends on its current processing status.
+Escalate urgent cancellation requests or cases where the transfer cannot be cancelled through the available process."
+KB098,Transfers,declined_transfer,Transfer was declined,A transfer was declined and could not be completed.,Transfer declined; transfer rejected; transfer did not go through.,"1. Check the transfer status and any available failure information.
+2. Verify the recipient and transfer details.
+3. Correct any incorrect information and retry if appropriate.
+4. Contact support if the transfer continues to be declined.",A declined transfer may require additional investigation when the reason is not clear from the transaction information.,Escalate if repeated transfer attempts are declined or the reason for the decline cannot be resolved from the available information.,"Transfer was declined
+A transfer was declined and could not be completed.
+Transfer declined; transfer rejected; transfer did not go through.
+1. Check the transfer status and any available failure information.
+2. Verify the recipient and transfer details.
+3. Correct any incorrect information and retry if appropriate.
+4. Contact support if the transfer continues to be declined.
+A declined transfer may require additional investigation when the reason is not clear from the transaction information.
+Escalate if repeated transfer attempts are declined or the reason for the decline cannot be resolved from the available information."
+KB099,Transfers,failed_transfer,Transfer failed,A transfer failed before it could be completed.,Transfer failed; transfer did not complete; transfer shows a failed status.,"1. Check the transfer status and transaction details.
+2. Verify the recipient and transfer information.
+3. Retry the transfer if the details are correct and retrying is allowed.
+4. Contact support if the transfer continues to fail.",A failed transfer may require review when the failure reason is not available or repeated attempts fail.,Escalate repeated transfer failures or cases where the customer cannot determine why the transfer failed.,"Transfer failed
+A transfer failed before it could be completed.
+Transfer failed; transfer did not complete; transfer shows a failed status.
+1. Check the transfer status and transaction details.
+2. Verify the recipient and transfer information.
+3. Retry the transfer if the details are correct and retrying is allowed.
+4. Contact support if the transfer continues to fail.
+A failed transfer may require review when the failure reason is not available or repeated attempts fail.
+Escalate repeated transfer failures or cases where the customer cannot determine why the transfer failed."
+KB100,Transfers,pending_transfer,Transfer is pending,A transfer remains pending and has not completed yet.,Transfer pending; transfer is still processing; transfer has not completed.,"1. Check the transfer status and transaction details.
+2. Confirm that the recipient and transfer information are correct.
+3. Allow the normal processing time for the transfer.
+4. Contact support if the transfer remains pending beyond the expected processing period.",Transfer processing times vary depending on the transfer method and destination.,Escalate if the transfer remains pending beyond the expected processing period or requires manual investigation.,"Transfer is pending
+A transfer remains pending and has not completed yet.
+Transfer pending; transfer is still processing; transfer has not completed.
+1. Check the transfer status and transaction details.
+2. Confirm that the recipient and transfer information are correct.
+3. Allow the normal processing time for the transfer.
+4. Contact support if the transfer remains pending beyond the expected processing period.
+Transfer processing times vary depending on the transfer method and destination.
+Escalate if the transfer remains pending beyond the expected processing period or requires manual investigation."
+KB101,Transfers,receiving_money,How to receive money,A customer wants to know how another person can send money to their account.,How can someone send money to me; how do I receive money; someone wants to transfer money to me; receiving a transfer.,"1. Identify the supported method for receiving money.
+2. Provide the sender with the required recipient details.
+3. Ask the sender to verify the recipient details before sending.
+4. Check the incoming transfer status if the expected money does not arrive.",Receiving money is different from sending a transfer. The required recipient information depends on the supported receiving method.,Escalate if an expected incoming transfer cannot be located or the customer cannot receive money using a supported method.,"How to receive money
+A customer wants to know how another person can send money to their account.
+How can someone send money to me; how do I receive money; someone wants to transfer money to me; receiving a transfer.
+1. Identify the supported method for receiving money.
+2. Provide the sender with the required recipient details.
+3. Ask the sender to verify the recipient details before sending.
+4. Check the incoming transfer status if the expected money does not arrive.
+Receiving money is different from sending a transfer. The required recipient information depends on the supported receiving method.
+Escalate if an expected incoming transfer cannot be located or the customer cannot receive money using a supported method."
+KB102,Transfers,supported_transfer_countries,Countries supported for transfers,A customer wants to know whether transfers are supported to or from a particular country.,Which countries support transfers; can I transfer money to another country; is this country supported for transfers; international transfer availability.,"1. Identify the destination or source country.
+2. Check whether transfers involving that country are supported.
+3. Confirm the applicable transfer method and requirements.
+4. Do not initiate the transfer if the destination is unsupported.","Country availability is a transfer-support question and may depend on the destination, source, and transfer method.",Escalate if support for the requested country cannot be confirmed or the customer requires review for a restricted destination.,"Countries supported for transfers
+A customer wants to know whether transfers are supported to or from a particular country.
+Which countries support transfers; can I transfer money to another country; is this country supported for transfers; international transfer availability.
+1. Identify the destination or source country.
+2. Check whether transfers involving that country are supported.
+3. Confirm the applicable transfer method and requirements.
+4. Do not initiate the transfer if the destination is unsupported.
+Country availability is a transfer-support question and may depend on the destination, source, and transfer method.
+Escalate if support for the requested country cannot be confirmed or the customer requires review for a restricted destination."
+KB103,Transfers,transfer_fee_charged,Transfer fee charged,A customer was charged a fee for a transfer.,Transfer fee; unexpected transfer charge; customer sees an additional fee associated with a transfer.,"1. Check the transfer transaction details.
+2. Identify the fee shown for the transfer.
+3. Review the applicable fee information for that transfer method.
+4. Contact support if the fee appears incorrect or unexpected.",Transfer fees can depend on the transfer method and transaction.,Escalate disputed or apparently incorrect transfer fees.,"Transfer fee charged
+A customer was charged a fee for a transfer.
+Transfer fee; unexpected transfer charge; customer sees an additional fee associated with a transfer.
+1. Check the transfer transaction details.
+2. Identify the fee shown for the transfer.
+3. Review the applicable fee information for that transfer method.
+4. Contact support if the fee appears incorrect or unexpected.
+Transfer fees can depend on the transfer method and transaction.
+Escalate disputed or apparently incorrect transfer fees."
+KB104,Transfers,transfer_not_received_by_recipient,Recipient has not received the transfer,"A transfer was sent successfully, but the recipient has not received the funds.",Recipient has not received money; transfer appears completed but recipient cannot see the funds.,"1. Check the transfer status and transaction details.
+2. Confirm the recipient information is correct.
+3. Allow the expected processing time for the transfer method.
+4. Contact support if the transfer is completed but the recipient still has not received the funds.",Delivery time can depend on the transfer method and recipient bank or destination.,Escalate when a transfer is confirmed completed but the recipient has not received the funds after the expected processing period.,"Recipient has not received the transfer
+A transfer was sent successfully, but the recipient has not received the funds.
+Recipient has not received money; transfer appears completed but recipient cannot see the funds.
+1. Check the transfer status and transaction details.
+2. Confirm the recipient information is correct.
+3. Allow the expected processing time for the transfer method.
+4. Contact support if the transfer is completed but the recipient still has not received the funds.
+Delivery time can depend on the transfer method and recipient bank or destination.
+Escalate when a transfer is confirmed completed but the recipient has not received the funds after the expected processing period."
+KB105,Transfers,transfer_timing,How long a transfer normally takes,A customer is asking about the normal time required for a transfer to arrive or complete.,How long does a transfer take; how quickly will a transfer arrive; normal transfer time; expected transfer duration; when should a transfer arrive.,"1. Identify the transfer method and destination.
+2. Check the expected processing time for that transfer type.
+3. Explain that the normal transfer time can vary by method and destination.
+4. If the customer is asking about a specific delayed transfer, check its current status instead.",This article covers general transfer timing questions. A specific transfer that is already showing as pending should be handled as a pending transfer.,Escalate if a specific transfer has exceeded its expected processing time and requires investigation.,"How long a transfer normally takes
+A customer is asking about the normal time required for a transfer to arrive or complete.
+How long does a transfer take; how quickly will a transfer arrive; normal transfer time; expected transfer duration; when should a transfer arrive.
+1. Identify the transfer method and destination.
+2. Check the expected processing time for that transfer type.
+3. Explain that the normal transfer time can vary by method and destination.
+4. If the customer is asking about a specific delayed transfer, check its current status instead.
+This article covers general transfer timing questions. A specific transfer that is already showing as pending should be handled as a pending transfer.
+Escalate if a specific transfer has exceeded its expected processing time and requires investigation."
+KB106,Top Up,automatic_top_up,Automatic top up,A customer wants to automatically add money to their account.,How do I enable automatic top up; where is auto top up; automatic top up limits.,"1. Open the available top up settings.
+2. Look for the automatic top up option.
+3. Configure the required amount or trigger if available.
+4. Review the configured limits before enabling automatic top up.",Automatic top up availability and limits depend on the account and supported top up configuration.,Escalate if the automatic top up option is unavailable when the customer expects it to be supported or configuration cannot be completed.,"Automatic top up
+A customer wants to automatically add money to their account.
+How do I enable automatic top up; where is auto top up; automatic top up limits.
+1. Open the available top up settings.
+2. Look for the automatic top up option.
+3. Configure the required amount or trigger if available.
+4. Review the configured limits before enabling automatic top up.
+Automatic top up availability and limits depend on the account and supported top up configuration.
+Escalate if the automatic top up option is unavailable when the customer expects it to be supported or configuration cannot be completed."
+KB107,Cash and Cheque,balance_not_updated_after_cheque_or_cash_deposit,Cash or cheque deposit not reflected in balance,A cash or cheque deposit has been made but the account balance has not been updated.,Cash deposit missing; cheque deposit pending; deposited cash not showing in balance; cheque has not updated the account.,"1. Confirm the deposit details and amount.
+2. Check whether the deposit has been processed.
+3. Allow the normal processing time for the deposit method.
+4. Contact support if the deposit remains missing after the expected processing period.",Cash and cheque deposits may require processing before the balance is updated.,Escalate if a confirmed cash or cheque deposit is still missing after the expected processing period.,"Cash or cheque deposit not reflected in balance
+A cash or cheque deposit has been made but the account balance has not been updated.
+Cash deposit missing; cheque deposit pending; deposited cash not showing in balance; cheque has not updated the account.
+1. Confirm the deposit details and amount.
+2. Check whether the deposit has been processed.
+3. Allow the normal processing time for the deposit method.
+4. Contact support if the deposit remains missing after the expected processing period.
+Cash and cheque deposits may require processing before the balance is updated.
+Escalate if a confirmed cash or cheque deposit is still missing after the expected processing period."
+KB108,Cash Withdrawal,cash_withdrawal_charge,Cash withdrawal fee,A customer was charged a fee when withdrawing cash.,ATM fee; cash withdrawal charge; extra fee for withdrawing money.,"1. Check the cash withdrawal transaction details.
+2. Identify the fee associated with the withdrawal.
+3. Review the applicable withdrawal fee information.
+4. Contact support if the fee appears incorrect or unexpected.","Cash withdrawal fees can depend on the withdrawal method, ATM, location, or applicable account conditions.",Escalate disputed or apparently incorrect cash withdrawal fees.,"Cash withdrawal fee
+A customer was charged a fee when withdrawing cash.
+ATM fee; cash withdrawal charge; extra fee for withdrawing money.
+1. Check the cash withdrawal transaction details.
+2. Identify the fee associated with the withdrawal.
+3. Review the applicable withdrawal fee information.
+4. Contact support if the fee appears incorrect or unexpected.
+Cash withdrawal fees can depend on the withdrawal method, ATM, location, or applicable account conditions.
+Escalate disputed or apparently incorrect cash withdrawal fees."
+KB109,Cash Withdrawal,cash_withdrawal_not_recognised,Unrecognised cash withdrawal,A customer sees a cash withdrawal they did not make.,Unknown ATM withdrawal; cash withdrawal not recognised; someone withdrew cash using the account.,"1. Check the transaction details and withdrawal amount.
+2. Confirm whether the customer recognises the ATM transaction.
+3. Secure the account or card if unauthorised activity is suspected.
+4. Contact support immediately to report the unrecognised withdrawal.",An unrecognised cash withdrawal may indicate unauthorised account or card activity.,Escalate all reported unauthorised or unrecognised cash withdrawals for investigation.,"Unrecognised cash withdrawal
+A customer sees a cash withdrawal they did not make.
+Unknown ATM withdrawal; cash withdrawal not recognised; someone withdrew cash using the account.
+1. Check the transaction details and withdrawal amount.
+2. Confirm whether the customer recognises the ATM transaction.
+3. Secure the account or card if unauthorised activity is suspected.
+4. Contact support immediately to report the unrecognised withdrawal.
+An unrecognised cash withdrawal may indicate unauthorised account or card activity.
+Escalate all reported unauthorised or unrecognised cash withdrawals for investigation."
+KB110,Cash Withdrawal,declined_cash_withdrawal,Cash withdrawal declined,A customer attempted to withdraw cash but the ATM declined the transaction.,ATM withdrawal declined; cannot withdraw cash; cash withdrawal rejected.,"1. Check the withdrawal details and available balance.
+2. Confirm that the card can be used for cash withdrawal.
+3. Try another supported ATM if appropriate.
+4. Contact support if cash withdrawals continue to be declined.","Cash withdrawals can be declined for different account, card, ATM, or transaction reasons.",Escalate repeated cash withdrawal declines when the customer cannot resolve the issue through normal checks.,"Cash withdrawal declined
+A customer attempted to withdraw cash but the ATM declined the transaction.
+ATM withdrawal declined; cannot withdraw cash; cash withdrawal rejected.
+1. Check the withdrawal details and available balance.
+2. Confirm that the card can be used for cash withdrawal.
+3. Try another supported ATM if appropriate.
+4. Contact support if cash withdrawals continue to be declined.
+Cash withdrawals can be declined for different account, card, ATM, or transaction reasons.
+Escalate repeated cash withdrawal declines when the customer cannot resolve the issue through normal checks."
+KB111,Cash Withdrawal,pending_cash_withdrawal,Cash withdrawal is pending,A cash withdrawal is still showing as pending.,ATM withdrawal pending; cash withdrawal still processing; pending cash transaction.,"1. Check the withdrawal transaction status.
+2. Confirm the withdrawal amount and ATM transaction details.
+3. Allow the normal processing time for the transaction.
+4. Contact support if the withdrawal remains pending beyond the expected period.",A cash withdrawal can temporarily remain pending while the transaction is being processed.,Escalate if the cash withdrawal remains pending beyond the expected processing period or requires transaction investigation.,"Cash withdrawal is pending
+A cash withdrawal is still showing as pending.
+ATM withdrawal pending; cash withdrawal still processing; pending cash transaction.
+1. Check the withdrawal transaction status.
+2. Confirm the withdrawal amount and ATM transaction details.
+3. Allow the normal processing time for the transaction.
+4. Contact support if the withdrawal remains pending beyond the expected period.
+A cash withdrawal can temporarily remain pending while the transaction is being processed.
+Escalate if the cash withdrawal remains pending beyond the expected processing period or requires transaction investigation."
+KB112,Top Up,pending_top_up,Top up is pending,A top up has been initiated but is still showing as pending.,Top up pending; top up still processing; money added but balance not updated.,"1. Check the top up transaction status.
+2. Confirm the top up amount and method.
+3. Allow the normal processing time for the top up.
+4. Contact support if the top up remains pending beyond the expected period.",A top up may remain pending while the payment or funding method is being processed.,Escalate if a top up remains pending beyond the expected processing period or requires transaction investigation.,"Top up is pending
+A top up has been initiated but is still showing as pending.
+Top up pending; top up still processing; money added but balance not updated.
+1. Check the top up transaction status.
+2. Confirm the top up amount and method.
+3. Allow the normal processing time for the top up.
+4. Contact support if the top up remains pending beyond the expected period.
+A top up may remain pending while the payment or funding method is being processed.
+Escalate if a top up remains pending beyond the expected processing period or requires transaction investigation."
+KB113,Top Up,top_up_by_bank_transfer_charge,Fee for topping up by bank transfer,A customer wants to know whether a fee applies when adding money by bank transfer.,Bank transfer top up fee; SEPA transfer charge; fee for adding money by transfer.,"1. Identify the bank transfer method being used.
+2. Check the applicable fee information.
+3. Confirm any charges before initiating the transfer.
+4. Contact support if a charge appears inconsistent with the applicable fee information.",Charges can depend on the bank transfer method and transaction.,Escalate disputed or apparently incorrect bank transfer top up charges.,"Fee for topping up by bank transfer
+A customer wants to know whether a fee applies when adding money by bank transfer.
+Bank transfer top up fee; SEPA transfer charge; fee for adding money by transfer.
+1. Identify the bank transfer method being used.
+2. Check the applicable fee information.
+3. Confirm any charges before initiating the transfer.
+4. Contact support if a charge appears inconsistent with the applicable fee information.
+Charges can depend on the bank transfer method and transaction.
+Escalate disputed or apparently incorrect bank transfer top up charges."
+KB114,Top Up,top_up_by_card_charge,Fee for topping up by card,A customer wants to know whether a fee applies when topping up using a card.,Card top up fee; charge for topping up by card; top up card charges.,"1. Identify the card and top up method.
+2. Check the applicable card top up fee information.
+3. Review any charge before completing the top up.
+4. Contact support if the applied fee appears incorrect.","Card top up charges can depend on the card, location, or supported top up method.",Escalate disputed or apparently incorrect card top up charges.,"Fee for topping up by card
+A customer wants to know whether a fee applies when topping up using a card.
+Card top up fee; charge for topping up by card; top up card charges.
+1. Identify the card and top up method.
+2. Check the applicable card top up fee information.
+3. Review any charge before completing the top up.
+4. Contact support if the applied fee appears incorrect.
+Card top up charges can depend on the card, location, or supported top up method.
+Escalate disputed or apparently incorrect card top up charges."
+KB115,Top Up,top_up_by_cash_or_cheque,Top up using cash or cheque,A customer wants to add money using cash or a cheque.,Top up with cash; top up with cheque; add money using a cheque; cash top up.,"1. Check whether cash or cheque top ups are supported.
+2. Review the available supported top up methods.
+3. Use a supported method to add money if cash or cheque deposits are unavailable.
+4. Contact support if the customer needs clarification about an available deposit method.",Cash and cheque top ups depend on the supported funding methods available for the account.,Escalate if the customer requires confirmation of a specific unsupported or unavailable cash or cheque deposit method.,"Top up using cash or cheque
+A customer wants to add money using cash or a cheque.
+Top up with cash; top up with cheque; add money using a cheque; cash top up.
+1. Check whether cash or cheque top ups are supported.
+2. Review the available supported top up methods.
+3. Use a supported method to add money if cash or cheque deposits are unavailable.
+4. Contact support if the customer needs clarification about an available deposit method.
+Cash and cheque top ups depend on the supported funding methods available for the account.
+Escalate if the customer requires confirmation of a specific unsupported or unavailable cash or cheque deposit method."
+KB116,Top Up,top_up_failed,Top up failed,A customer attempted a top up but it failed or was rejected.,Top up failed; top up rejected; top up not working; top up did not go through.,"1. Check the top up status and transaction details.
+2. Verify the selected top up method and entered information.
+3. Retry the top up if the details are correct and retrying is available.
+4. Contact support if the top up continues to fail.",A failed top up may require investigation when the failure reason is unclear or repeated attempts fail.,Escalate repeated top up failures or cases where the failure reason cannot be resolved.,"Top up failed
+A customer attempted a top up but it failed or was rejected.
+Top up failed; top up rejected; top up not working; top up did not go through.
+1. Check the top up status and transaction details.
+2. Verify the selected top up method and entered information.
+3. Retry the top up if the details are correct and retrying is available.
+4. Contact support if the top up continues to fail.
+A failed top up may require investigation when the failure reason is unclear or repeated attempts fail.
+Escalate repeated top up failures or cases where the failure reason cannot be resolved."
+KB117,Top Up,top_up_limits,Top up limits,A customer wants to know the maximum amount they can add through top up.,Maximum top up amount; top up limit; how much can I top up; increase top up limit.,"1. Check the applicable top up limits.
+2. Confirm the relevant top up method and account conditions.
+3. Ensure the requested amount is within the applicable limit.
+4. Contact support if the displayed limit appears incorrect.",Top up limits can vary depending on the top up method and account conditions.,Escalate if the customer cannot determine the applicable limit or a displayed limit appears incorrect.,"Top up limits
+A customer wants to know the maximum amount they can add through top up.
+Maximum top up amount; top up limit; how much can I top up; increase top up limit.
+1. Check the applicable top up limits.
+2. Confirm the relevant top up method and account conditions.
+3. Ensure the requested amount is within the applicable limit.
+4. Contact support if the displayed limit appears incorrect.
+Top up limits can vary depending on the top up method and account conditions.
+Escalate if the customer cannot determine the applicable limit or a displayed limit appears incorrect."
+KB118,Top Up,top_up_reverted,Top up was reverted,A completed or visible top up was later reversed or removed.,Top up reverted; top up cancelled; money disappeared after top up; completed top up was reversed.,"1. Check the top up transaction status and history.
+2. Confirm the original top up amount and method.
+3. Check whether the transaction was reversed or cancelled.
+4. Contact support if the reversal is unexpected or the funds are missing.",A top up may be reverted after initially appearing successful.,Escalate unexpected top up reversals or cases where the funds have not been returned correctly.,"Top up was reverted
+A completed or visible top up was later reversed or removed.
+Top up reverted; top up cancelled; money disappeared after top up; completed top up was reversed.
+1. Check the top up transaction status and history.
+2. Confirm the original top up amount and method.
+3. Check whether the transaction was reversed or cancelled.
+4. Contact support if the reversal is unexpected or the funds are missing.
+A top up may be reverted after initially appearing successful.
+Escalate unexpected top up reversals or cases where the funds have not been returned correctly."
+KB119,Top Up,topping_up_by_card,How to top up by card,A customer wants to add money using a payment card.,How do I top up with a card; add money using a credit or debit card; card top up.,"1. Open the top up option.
+2. Select the supported card top up method.
+3. Enter the required card and top up information.
+4. Confirm the top up and check the transaction status.",Card top ups require a supported card and may be subject to applicable limits or verification.,Escalate if a supported card cannot be used for top up or the top up cannot be completed after verification.,"How to top up by card
+A customer wants to add money using a payment card.
+How do I top up with a card; add money using a credit or debit card; card top up.
+1. Open the top up option.
+2. Select the supported card top up method.
+3. Enter the required card and top up information.
+4. Confirm the top up and check the transaction status.
+Card top ups require a supported card and may be subject to applicable limits or verification.
+Escalate if a supported card cannot be used for top up or the top up cannot be completed after verification."
+KB120,Top Up,verify_top_up,Verify a top up,A customer needs to verify a top up or asks about the verification code.,Top up verification; verification code for top up; verify top up card.,"1. Check whether verification is requested for the top up.
+2. Follow the verification process shown for the transaction.
+3. Enter the required verification code when prompted.
+4. Contact support if the verification code is unavailable or does not work.",Some top ups may require an additional verification step.,Escalate if the required top up verification cannot be completed or the verification code is not accepted.,"Verify a top up
+A customer needs to verify a top up or asks about the verification code.
+Top up verification; verification code for top up; verify top up card.
+1. Check whether verification is requested for the top up.
+2. Follow the verification process shown for the transaction.
+3. Enter the required verification code when prompted.
+4. Contact support if the verification code is unavailable or does not work.
+Some top ups may require an additional verification step.
+Escalate if the required top up verification cannot be completed or the verification code is not accepted."
+KB121,Cash Withdrawal,wrong_amount_of_cash_received,Incorrect cash amount received,A customer received a different amount of cash from the amount requested at an ATM.,ATM gave less cash; wrong cash amount; partial cash withdrawal; cash received differs from requested amount.,"1. Check the ATM transaction amount.
+2. Confirm the amount requested and the physical cash received.
+3. Keep the transaction details and any ATM receipt.
+4. Contact support to report the cash amount discrepancy.",The cash received can differ from the requested amount and may require transaction investigation.,Escalate all reported discrepancies between the requested and received cash amounts.,"Incorrect cash amount received
+A customer received a different amount of cash from the amount requested at an ATM.
+ATM gave less cash; wrong cash amount; partial cash withdrawal; cash received differs from requested amount.
+1. Check the ATM transaction amount.
+2. Confirm the amount requested and the physical cash received.
+3. Keep the transaction details and any ATM receipt.
+4. Contact support to report the cash amount discrepancy.
+The cash received can differ from the requested amount and may require transaction investigation.
+Escalate all reported discrepancies between the requested and received cash amounts."
+KB122,Cash Withdrawal,wrong_exchange_rate_for_cash_withdrawal,Wrong exchange rate for cash withdrawal,A customer believes the exchange rate applied to a cash withdrawal was incorrect.,Wrong ATM exchange rate; incorrect exchange rate for cash withdrawal; received less because of exchange rate.,"1. Check the cash withdrawal transaction details.
+2. Confirm the withdrawal currency and account currency.
+3. Review the exchange rate applied to the transaction.
+4. Contact support if the applied exchange rate appears incorrect.",Exchange rates can affect the final account amount when withdrawing cash in another currency.,Escalate disputed or apparently incorrect exchange rates applied to cash withdrawals.,"Wrong exchange rate for cash withdrawal
+A customer believes the exchange rate applied to a cash withdrawal was incorrect.
+Wrong ATM exchange rate; incorrect exchange rate for cash withdrawal; received less because of exchange rate.
+1. Check the cash withdrawal transaction details.
+2. Confirm the withdrawal currency and account currency.
+3. Review the exchange rate applied to the transaction.
+4. Contact support if the applied exchange rate appears incorrect.
+Exchange rates can affect the final account amount when withdrawing cash in another currency.
+Escalate disputed or apparently incorrect exchange rates applied to cash withdrawals."
+KB123,Card Payments,Refund_not_showing_up,Refund has not arrived,A customer is waiting for a card payment refund that has not appeared in their account.,Refund missing; refund has not arrived; waiting for a refund; refunded payment not showing.,"1. Check the original payment and refund details.
+2. Confirm that the refund was actually issued.
+3. Allow the expected processing time for the refund to appear.
+4. Contact support if the refund remains missing after the expected period.",A refund may take time to appear after it has been issued.,Escalate if a confirmed refund has not appeared after the expected processing period.,"Refund has not arrived
+A customer is waiting for a card payment refund that has not appeared in their account.
+Refund missing; refund has not arrived; waiting for a refund; refunded payment not showing.
+1. Check the original payment and refund details.
+2. Confirm that the refund was actually issued.
+3. Allow the expected processing time for the refund to appear.
+4. Contact support if the refund remains missing after the expected period.
+A refund may take time to appear after it has been issued.
+Escalate if a confirmed refund has not appeared after the expected processing period."
+KB124,Card Payments,declined_card_payment,Card payment was declined,A customer attempted to make a card payment but the payment was declined.,Card payment declined; card payment rejected; payment did not go through.,"1. Check the payment status and available transaction information.
+2. Confirm that the card is active and can be used for payments.
+3. Check the available balance and payment details.
+4. Retry the payment if appropriate or use another supported payment method.","Card payments can be declined for different card, balance, merchant, or transaction reasons.",Escalate repeated unexplained card payment declines or cases requiring transaction investigation.,"Card payment was declined
+A customer attempted to make a card payment but the payment was declined.
+Card payment declined; card payment rejected; payment did not go through.
+1. Check the payment status and available transaction information.
+2. Confirm that the card is active and can be used for payments.
+3. Check the available balance and payment details.
+4. Retry the payment if appropriate or use another supported payment method.
+Card payments can be declined for different card, balance, merchant, or transaction reasons.
+Escalate repeated unexplained card payment declines or cases requiring transaction investigation."
+KB125,Card Payments,extra_charge_on_statement,Extra charge on statement,A customer sees an additional or unexpected charge on their account statement.,Extra charge; unexpected charge; additional amount on statement; charged more than expected.,"1. Check the transaction details and charged amount.
+2. Compare the charge with the original purchase or transaction.
+3. Check whether the additional amount is an applicable fee or adjustment.
+4. Contact support if the charge cannot be explained.","An additional statement amount may represent a fee, adjustment, or other transaction-related charge.",Escalate disputed or unexplained charges after the transaction details have been reviewed.,"Extra charge on statement
+A customer sees an additional or unexpected charge on their account statement.
+Extra charge; unexpected charge; additional amount on statement; charged more than expected.
+1. Check the transaction details and charged amount.
+2. Compare the charge with the original purchase or transaction.
+3. Check whether the additional amount is an applicable fee or adjustment.
+4. Contact support if the charge cannot be explained.
+An additional statement amount may represent a fee, adjustment, or other transaction-related charge.
+Escalate disputed or unexplained charges after the transaction details have been reviewed."
+KB126,Card Payments,pending_card_payment,Card payment is pending,A card payment is still showing as pending.,Card payment pending; payment still processing; card transaction has not completed.,"1. Check the payment transaction status.
+2. Confirm the merchant and payment amount.
+3. Allow the normal processing time for the card payment.
+4. Contact support if the payment remains pending beyond the expected period.",A card payment can remain pending while the merchant or payment network completes processing.,Escalate if the card payment remains pending beyond the expected processing period or requires transaction investigation.,"Card payment is pending
+A card payment is still showing as pending.
+Card payment pending; payment still processing; card transaction has not completed.
+1. Check the payment transaction status.
+2. Confirm the merchant and payment amount.
+3. Allow the normal processing time for the card payment.
+4. Contact support if the payment remains pending beyond the expected period.
+A card payment can remain pending while the merchant or payment network completes processing.
+Escalate if the card payment remains pending beyond the expected processing period or requires transaction investigation."
+KB127,Card Payments,request_refund,Request a card payment refund,A customer wants to request a refund for a card payment.,I want a refund; request refund; get my money back from a card purchase; refund a card payment.,"1. Identify the card payment and merchant.
+2. Check whether the transaction is eligible for a refund.
+3. Follow the applicable refund process.
+4. Contact support if the refund cannot be requested through the available process.",Refund availability can depend on the transaction and applicable merchant or support process.,Escalate disputed refund requests or cases where a refund cannot be requested through the normal process.,"Request a card payment refund
+A customer wants to request a refund for a card payment.
+I want a refund; request refund; get my money back from a card purchase; refund a card payment.
+1. Identify the card payment and merchant.
+2. Check whether the transaction is eligible for a refund.
+3. Follow the applicable refund process.
+4. Contact support if the refund cannot be requested through the available process.
+Refund availability can depend on the transaction and applicable merchant or support process.
+Escalate disputed refund requests or cases where a refund cannot be requested through the normal process."
+KB128,Card Payments,reverted_card_payment?,Card payment was reverted,A card payment was reversed or returned after initially appearing as completed or authorised.,Card payment reverted; payment reversed; payment returned; card payment disappeared or was reversed.,"1. Check the card payment transaction status and history.
+2. Confirm the original payment amount and merchant.
+3. Check whether the payment was reversed or reverted.
+4. Contact support if the reversal is unexpected or the transaction remains incorrect.",A card payment can be reverted after initially appearing as authorised or completed.,Escalate unexpected payment reversals or cases where the transaction outcome remains unclear.,"Card payment was reverted
+A card payment was reversed or returned after initially appearing as completed or authorised.
+Card payment reverted; payment reversed; payment returned; card payment disappeared or was reversed.
+1. Check the card payment transaction status and history.
+2. Confirm the original payment amount and merchant.
+3. Check whether the payment was reversed or reverted.
+4. Contact support if the reversal is unexpected or the transaction remains incorrect.
+A card payment can be reverted after initially appearing as authorised or completed.
+Escalate unexpected payment reversals or cases where the transaction outcome remains unclear."
+KB129,Card Payments,transaction_charged_twice,Transaction charged twice,A customer believes the same transaction was charged more than once.,Charged twice; duplicate transaction; same payment appears twice; duplicate card charge.,"1. Compare the duplicated transactions and their amounts.
+2. Check whether both transactions are completed or whether one is still pending.
+3. Allow temporary duplicate authorisations to resolve when applicable.
+4. Contact support if both charges remain completed and appear duplicated.",Two similar card transactions can sometimes include a temporary authorisation and a completed payment.,Escalate when duplicate completed charges remain after the normal processing period.,"Transaction charged twice
+A customer believes the same transaction was charged more than once.
+Charged twice; duplicate transaction; same payment appears twice; duplicate card charge.
+1. Compare the duplicated transactions and their amounts.
+2. Check whether both transactions are completed or whether one is still pending.
+3. Allow temporary duplicate authorisations to resolve when applicable.
+4. Contact support if both charges remain completed and appear duplicated.
+Two similar card transactions can sometimes include a temporary authorisation and a completed payment.
+Escalate when duplicate completed charges remain after the normal processing period."
+KB130,Direct Debit,direct_debit_payment_not_recognised,Unrecognised direct debit payment,A customer sees a direct debit payment they do not recognise.,Unknown direct debit; unrecognised direct debit payment; direct debit I did not authorise.,"1. Check the direct debit transaction details.
+2. Confirm the merchant or organisation associated with the payment.
+3. Report the payment if the customer does not recognise or authorise it.
+4. Contact support for investigation of the unrecognised direct debit.",An unrecognised direct debit may require investigation to determine its origin and authorisation.,Escalate all reported unauthorised or unrecognised direct debit payments.,"Unrecognised direct debit payment
+A customer sees a direct debit payment they do not recognise.
+Unknown direct debit; unrecognised direct debit payment; direct debit I did not authorise.
+1. Check the direct debit transaction details.
+2. Confirm the merchant or organisation associated with the payment.
+3. Report the payment if the customer does not recognise or authorise it.
+4. Contact support for investigation of the unrecognised direct debit.
+An unrecognised direct debit may require investigation to determine its origin and authorisation.
+Escalate all reported unauthorised or unrecognised direct debit payments."
+KB131,Account Management,age_limit,Age requirements,A customer wants to know the minimum age required to use the service.,Minimum age; age requirement; how old do I need to be; age limit.,"1. Check the applicable age requirement.
+2. Confirm that the customer's age meets the requirement.
+3. If the customer does not meet the requirement, explain that the account cannot be opened or used under the applicable rules.",Age requirements depend on the service and applicable account rules.,Escalate if the customer's eligibility cannot be determined from the available age requirements.,"Age requirements
+A customer wants to know the minimum age required to use the service.
+Minimum age; age requirement; how old do I need to be; age limit.
+1. Check the applicable age requirement.
+2. Confirm that the customer's age meets the requirement.
+3. If the customer does not meet the requirement, explain that the account cannot be opened or used under the applicable rules.
+Age requirements depend on the service and applicable account rules.
+Escalate if the customer's eligibility cannot be determined from the available age requirements."
+KB132,Account Management,edit_personal_details,Edit personal details,A customer wants to change their personal account information.,Change personal details; edit account information; update personal information; change profile details.,"1. Open the account or personal information settings.
+2. Select the detail that needs to be changed.
+3. Enter the updated information.
+4. Complete any verification required to save the change.",Some personal information changes may require additional verification.,Escalate if the customer cannot update their personal details through the available account settings or verification fails.,"Edit personal details
+A customer wants to change their personal account information.
+Change personal details; edit account information; update personal information; change profile details.
+1. Open the account or personal information settings.
+2. Select the detail that needs to be changed.
+3. Enter the updated information.
+4. Complete any verification required to save the change.
+Some personal information changes may require additional verification.
+Escalate if the customer cannot update their personal details through the available account settings or verification fails."
+KB133,Account Security,lost_or_stolen_phone,Lost or stolen phone,A customer has lost their phone or believes their phone has been stolen.,Lost phone; stolen phone; phone is missing; cannot access account because phone was lost.,"1. Secure access to the account as soon as possible.
+2. Use another trusted device or available recovery method if possible.
+3. Change relevant account credentials if account access may be compromised.
+4. Contact support if the customer cannot secure or recover the account.",A lost or stolen phone can create a risk of unauthorised account access.,Escalate if the customer cannot secure the account or suspects unauthorised access after losing the phone.,"Lost or stolen phone
+A customer has lost their phone or believes their phone has been stolen.
+Lost phone; stolen phone; phone is missing; cannot access account because phone was lost.
+1. Secure access to the account as soon as possible.
+2. Use another trusted device or available recovery method if possible.
+3. Change relevant account credentials if account access may be compromised.
+4. Contact support if the customer cannot secure or recover the account.
+A lost or stolen phone can create a risk of unauthorised account access.
+Escalate if the customer cannot secure the account or suspects unauthorised access after losing the phone."
+KB134,Login and Authentication,passcode_forgotten,Forgotten passcode,A customer has forgotten the passcode used to access the account.,Forgot passcode; cannot remember passcode; unable to log in because of forgotten passcode.,"1. Use the available passcode recovery or reset option.
+2. Complete any identity or security verification requested.
+3. Set a new passcode when the recovery process is completed.
+4. Contact support if the recovery process cannot be completed.",Passcode recovery may require additional account verification.,Escalate if the customer cannot recover access through the available passcode recovery process.,"Forgotten passcode
+A customer has forgotten the passcode used to access the account.
+Forgot passcode; cannot remember passcode; unable to log in because of forgotten passcode.
+1. Use the available passcode recovery or reset option.
+2. Complete any identity or security verification requested.
+3. Set a new passcode when the recovery process is completed.
+4. Contact support if the recovery process cannot be completed.
+Passcode recovery may require additional account verification.
+Escalate if the customer cannot recover access through the available passcode recovery process."
+KB135,Cards,pin_blocked,Card PIN is blocked,A customer's card PIN has been blocked.,PIN blocked; PIN failed too many times; card PIN locked; cannot use PIN.,"1. Check the card and PIN status.
+2. Follow the available process to unblock or recover the PIN.
+3. Avoid repeated incorrect PIN attempts.
+4. Contact support if the PIN remains blocked.",Repeated incorrect PIN attempts can result in the PIN being blocked.,Escalate if the PIN cannot be unblocked through the available process or the card remains unusable.,"Card PIN is blocked
+A customer's card PIN has been blocked.
+PIN blocked; PIN failed too many times; card PIN locked; cannot use PIN.
+1. Check the card and PIN status.
+2. Follow the available process to unblock or recover the PIN.
+3. Avoid repeated incorrect PIN attempts.
+4. Contact support if the PIN remains blocked.
+Repeated incorrect PIN attempts can result in the PIN being blocked.
+Escalate if the PIN cannot be unblocked through the available process or the card remains unusable."
+KB136,Account Management,terminate_account,Close an account,A customer wants to permanently close their account.,Delete account; close account; terminate account; stop using account permanently.,"1. Review the account closure requirements.
+2. Resolve any outstanding transactions or obligations before closure.
+3. Use the available account closure process.
+4. Contact support if the account cannot be closed through the normal process.","Account closure may involve outstanding balances, transactions, or other account requirements.","Escalate privacy, legal, unresolved dispute, or account closure requests that cannot be completed through the normal process.","Close an account
+A customer wants to permanently close their account.
+Delete account; close account; terminate account; stop using account permanently.
+1. Review the account closure requirements.
+2. Resolve any outstanding transactions or obligations before closure.
+3. Use the available account closure process.
+4. Contact support if the account cannot be closed through the normal process.
+Account closure may involve outstanding balances, transactions, or other account requirements.
+Escalate privacy, legal, unresolved dispute, or account closure requests that cannot be completed through the normal process."
+KB137,Identity Verification,unable_to_verify_identity,Unable to verify identity,A customer cannot complete the identity verification process.,Identity verification failed; cannot verify identity; verification does not work; unable to complete verification.,"1. Check that the submitted information and documents are correct.
+2. Follow the verification instructions carefully.
+3. Retry the verification process if permitted.
+4. Contact support if verification continues to fail.",Identity verification may require accurate information and acceptable verification documents.,Escalate if identity verification repeatedly fails or cannot be completed through the available process.,"Unable to verify identity
+A customer cannot complete the identity verification process.
+Identity verification failed; cannot verify identity; verification does not work; unable to complete verification.
+1. Check that the submitted information and documents are correct.
+2. Follow the verification instructions carefully.
+3. Retry the verification process if permitted.
+4. Contact support if verification continues to fail.
+Identity verification may require accurate information and acceptable verification documents.
+Escalate if identity verification repeatedly fails or cannot be completed through the available process."
+KB138,Identity Verification,verify_my_identity,How to verify identity,A customer wants to know how to complete identity verification.,How do I verify my identity; identity verification process; verify account identity; what documents are needed for verification.,"1. Open the identity verification process.
+2. Provide the requested personal information and verification documents.
+3. Follow the verification instructions.
+4. Wait for the verification result or complete any additional requested step.",Identity verification requirements depend on the account and applicable verification process.,Escalate if the customer cannot complete the verification process or requires manual verification.,"How to verify identity
+A customer wants to know how to complete identity verification.
+How do I verify my identity; identity verification process; verify account identity; what documents are needed for verification.
+1. Open the identity verification process.
+2. Provide the requested personal information and verification documents.
+3. Follow the verification instructions.
+4. Wait for the verification result or complete any additional requested step.
+Identity verification requirements depend on the account and applicable verification process.
+Escalate if the customer cannot complete the verification process or requires manual verification."
+KB139,Identity Verification,verify_source_of_funds,Verify source of funds,A customer is asked to provide information verifying where their funds came from.,Source of funds verification; verify where money came from; proof of source of funds; source of funds request.,"1. Review the source of funds information requested.
+2. Provide accurate supporting information or documents.
+3. Submit the requested information through the available verification process.
+4. Contact support if the source of funds verification cannot be completed.",Source of funds checks may require supporting information or documents about the origin of funds.,Escalate if the customer cannot complete the source of funds verification or requires manual review.,"Verify source of funds
+A customer is asked to provide information verifying where their funds came from.
+Source of funds verification; verify where money came from; proof of source of funds; source of funds request.
+1. Review the source of funds information requested.
+2. Provide accurate supporting information or documents.
+3. Submit the requested information through the available verification process.
+4. Contact support if the source of funds verification cannot be completed.
+Source of funds checks may require supporting information or documents about the origin of funds.
+Escalate if the customer cannot complete the source of funds verification or requires manual review."
+KB140,Identity Verification,why_verify_identity,Why identity verification is required,A customer wants to understand why identity verification is required.,Why verify identity; why do I need identity verification; reason for identity check; why is verification required.,"1. Explain that identity verification is used to confirm the customer's identity.
+2. Explain that verification may be required before certain account functions can be used.
+3. Direct the customer to complete the verification process when required.",Identity verification requirements depend on the account and applicable verification rules.,Escalate if the customer has questions about a specific verification decision that cannot be resolved through the standard information.,"Why identity verification is required
+A customer wants to understand why identity verification is required.
+Why verify identity; why do I need identity verification; reason for identity check; why is verification required.
+1. Explain that identity verification is used to confirm the customer's identity.
+2. Explain that verification may be required before certain account functions can be used.
+3. Direct the customer to complete the verification process when required.
+Identity verification requirements depend on the account and applicable verification rules.
+Escalate if the customer has questions about a specific verification decision that cannot be resolved through the standard information."
+KB141,Currency & Exchange,exchange_rate,Exchange Rate,The customer wants to know the current exchange rate or the rate that will be applied to a currency exchange.,"Asks about exchange rates, conversion rates, or how much one currency is worth in another currency.","1. Explain that exchange rates vary over time.
+2. Ask the customer to check the current rate shown in the app before confirming an exchange.
+3. Explain that the displayed rate is the applicable rate for the transaction.",The exact rate depends on the currencies and the time of the exchange.,Escalate if the customer disputes the applied exchange rate after providing transaction details.,exchange rate current exchange rate currency conversion rate rate for converting money how much one currency is worth another currency
+KB142,Currency & Exchange,exchange_charge,Exchange Fees,The customer wants to know whether a fee or charge applies when exchanging currencies.,"Asks about exchange fees, currency conversion charges, or being charged for exchanging currencies.","1. Explain that applicable exchange charges depend on the transaction and currencies involved.
+2. Ask the customer to review the exchange details shown before confirming the transaction.
+3. If a charge has already appeared, review the transaction details.",Charges should be checked against the exchange transaction details shown in the app.,Escalate if the customer disputes an exchange charge that cannot be explained from the transaction details.,exchange charge exchange fee currency conversion fee charged for exchanging money currency exchange cost conversion charge
+KB143,Currency & Exchange,exchange_via_app,Exchange Currency in the App,The customer wants to know how to exchange one currency for another using the app.,"Asks how to exchange currencies, convert money, or perform a currency exchange in the app.","1. Open the currency or exchange section in the app.
+2. Select the currency to exchange from and the currency to receive.
+3. Enter the amount.
+4. Review the exchange rate and transaction details.
+5. Confirm the exchange.",The available currencies and applicable rate are shown during the exchange process.,Escalate if the customer cannot complete an exchange because of an account or technical problem.,exchange currency via app how to exchange currencies convert money in app currency conversion exchange currencies using application
+KB144,Currency & Exchange,fiat_currency_support,Supported Fiat Currencies,The customer wants to know which fiat currencies are supported by the service.,Asks whether a particular currency is supported or which currencies are available.,"1. Check whether the requested fiat currency is supported.
+2. Review the supported currency list in the app.
+3. If the currency is not available, explain that it cannot currently be used through the relevant feature.",Supported fiat currencies can depend on the specific service or transaction.,Escalate if the customer believes a supported currency is incorrectly unavailable in their account.,fiat currency support supported currencies supported fiat currencies available currency is my currency supported which currencies are supported
+KB145,Cards,getting_virtual_card,Getting a Virtual Card,The customer wants to know how to obtain a virtual card.,"Asks how to get, create, or access a virtual card.","1. Open the cards section in the app.
+2. Select the option to create or access a virtual card.
+3. Follow the instructions shown in the app.",Virtual card availability depends on the customer's account and supported features.,Escalate if the virtual card option is unavailable despite the account being eligible.,getting virtual card get virtual card create virtual card obtain virtual card access virtual card how to get a virtual card
+KB146,Cards,get_disposable_virtual_card,Getting a Disposable Virtual Card,The customer wants to obtain a disposable virtual card.,"Asks how to get, create, or use a disposable virtual card.","1. Open the cards section in the app.
+2. Select the disposable virtual card option if available.
+3. Follow the instructions to create or access the disposable card.",Disposable virtual card availability depends on the account and supported features.,Escalate if the disposable virtual card option should be available but cannot be accessed.,get disposable virtual card disposable card create disposable virtual card obtain disposable virtual card access disposable virtual card how to get disposable card
+KB147,Cards,disposable_card_limits,Disposable Virtual Card Limits,The customer wants to know about limitations or usage restrictions for disposable virtual cards.,"Asks about disposable card limits, restrictions, number of transactions, or where disposable cards can be used.","1. Explain that disposable virtual cards have usage restrictions.
+2. Check the limits and supported transaction types shown for the disposable card.
+3. If a transaction is rejected, review whether it falls within the supported usage.",Some merchants or transaction types may not support disposable virtual cards.,Escalate if a customer reports an unexpected restriction or repeated rejection that is not explained by the documented limits.,disposable card limits disposable virtual card limitations restrictions usage limit transaction limit disposable card not supported merchant
+KB148,Cards,virtual_card_not_working,Virtual Card Not Working,The customer's virtual card is not working for a transaction.,"Virtual card is declined, does not work, or cannot be used for a payment.","1. Check that the virtual card is active.
+2. Confirm that the merchant accepts the card type.
+3. Check for transaction restrictions or limits.
+4. Retry the transaction if appropriate.
+5. If the problem continues, review the transaction details.",Some merchants or transaction types may not support virtual cards.,"Escalate if the virtual card remains unusable after checking activation, merchant support, and applicable restrictions.",virtual card not working virtual card declined virtual card does not work virtual card payment failed cannot use virtual card
+KB149,Cards & Payments,apple_pay_or_google_pay,Apple Pay and Google Pay,The customer wants to know whether they can use the service with Apple Pay or Google Pay.,Asks about adding a card to Apple Pay or Google Pay or using these mobile payment services.,"1. Check whether the card and account support the requested mobile payment service.
+2. Open the relevant wallet application.
+3. Follow the wallet's instructions to add the supported card.
+4. Complete any verification requested by the wallet.","Availability can depend on the card, country, device, and supported wallet features.",Escalate if an eligible card cannot be added to the supported mobile wallet after following the setup instructions.,Apple Pay Google Pay mobile wallet add card to Apple Pay add card to Google Pay use card with Apple Pay Google Wallet
+KB150,Cards & Cash,atm_support,ATM Support,The customer wants to know about ATM availability and cash withdrawal support.,Asks whether they can withdraw cash from an ATM or which ATMs can be used.,"1. Use a supported ATM that accepts the card.
+2. Insert or tap the card as supported by the ATM.
+3. Select the cash withdrawal option.
+4. Follow the ATM instructions and complete the transaction.","ATM availability, fees, and supported features can vary by location and ATM provider.",Escalate if a supported ATM repeatedly rejects the card or a cash withdrawal issue cannot be resolved.,ATM support cash withdrawal ATM availability which ATM can I use withdraw cash cash machine supported ATM
+KB151,Account & Availability,country_support,Supported Countries,The customer wants to know whether the service is available in a particular country.,Asks whether they can use the service from a specific country or which countries are supported.,"1. Check whether the customer's country is supported.
+2. Review the current supported-country information for the relevant service.
+3. If the country is unsupported, explain that the service is not currently available there.",Availability can vary by product and may change over time.,Escalate if a customer in a supported country cannot access a service that should be available to them.,country support supported countries service available country is my country supported countries where can I use the service availability by country
+KB152,Cards & Top Up,supported_cards_and_currencies,Supported Cards and Currencies,The customer wants to know which cards and currencies are supported for a card-related transaction or top-up.,"Asks which cards, card types, or currencies can be used.","1. Check whether the customer's card type is supported.
+2. Check whether the selected currency is supported.
+3. Use a supported card and currency for the transaction.",Supported cards and currencies can depend on the specific transaction or top-up method.,Escalate if a card or currency that should be supported is rejected unexpectedly.,supported cards currencies supported card types supported currencies which cards can I use which currencies can I use card and currency support
+KB153,Account Funding,transfer_into_account,Transfer Money Into the Account,The customer wants to know how to transfer money into their account.,"Asks how to add money by bank transfer, make a transfer into their account, or find the details needed to receive a transfer.","1. Open the account's bank transfer or add-money section.
+2. Obtain the account details required for the transfer.
+3. Initiate the bank transfer from the sending bank.
+4. Use the required reference or transfer information when instructed.
+5. Wait for the transfer to be processed.","Transfer processing time depends on the sending bank, transfer type, and supported payment rails.",Escalate if money was sent to the correct account details but has not arrived within the expected processing period.,transfer into account add money by bank transfer transfer money into my account receive bank transfer account transfer how to fund account

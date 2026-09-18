@@ -1,0 +1,8 @@
+Category: Technical/Bug
+Intent: search_not_matching
+Issue: Search misses valid records
+Problem: Search fails to return records that appear to match the query.
+Symptoms: No results for known record.
+Resolution: Try normalized spelling, remove unnecessary filters, and verify indexing status.
+Additional information: Diacritics and normalization can affect matching.
+Escalation: Escalate indexing defec
